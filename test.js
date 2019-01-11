@@ -1,7 +1,7 @@
 // const mongo = require("./model/mongodb");
-// const log = require("./controller/log");
+const log = require("./controller/log");
 // // connect();
-// log();
+log();
 // const loginit = require("./tools/log_push");
 // loginit()
 

@@ -1,22 +1,22 @@
-mod = function (){
+mod = function (str){
     var HTTPParser = process.binding('http_parser').HTTPParser;
     parser = new HTTPParser(HTTPParser.REQUEST);
 
     // Request content for testing
-    str=`POST /index.php HTTP/1.1
-Host: 47.106.182.92:30001
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: zh-CN
-Accept-Encoding: gzip, deflate
-Connection: close
-Cookie: PHPSESSID=unfs48427tro0rts8b02r81kv7
-Upgrade-Insecure-Requests: 1
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 22
+//     str=`POST /index.php HTTP/1.1
+// Host: 47.106.182.92:30001
+// User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0
+// Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+// Accept-Language: zh-CN
+// Accept-Encoding: gzip, deflate
+// Connection: close
+// Cookie: PHPSESSID=unfs48427tro0rts8b02r81kv7
+// Upgrade-Insecure-Requests: 1
+// Content-Type: application/x-www-form-urlencoded
+// Content-Length: 22
 
-function=system&cmd=ls
-`;
+// function=system&cmd=ls
+// `;
     //organize request content
     str += `\n\n`;
 

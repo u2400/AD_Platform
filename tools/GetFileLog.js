@@ -1,13 +1,15 @@
 
-var events = require('events');
+const events = require('events').EventEmitter;
 const readline = require('readline');
 const fs = require('fs');
 const iconv = require('iconv-lite');
-
-mod = function(file = `./web_log_10`,callback){
+var mod = {};
+const EventEmitter = new events();
+mod.on = function(event,callback){
+    EventEmitter.on(event,callback);
+}
+mod.start = function(file){
     let input = fs.createReadStream(file);
-
-    events.on('message',callback());
 
     const rl = readline.createInterface({
         input: input
@@ -20,14 +22,16 @@ mod = function(file = `./web_log_10`,callback){
         }
         else{
             request = iconv.decode(request, 'utf-8');
-            events.emit("message",request); //Trigger the message event
+            if(request != ""){
+                EventEmitter.emit("message",request); //Trigger the message event
+            }
             request = "";
         }
     });
 
-    rl.on('close', async function(line){
+    rl.on('close', function(line){
         request = iconv.decode(request, 'utf-8');
-        events.emit("message",request); //Trigger the message event
+        EventEmitter.emit("message",request); //Trigger the message event
     });
 }
 module.exports = mod;
