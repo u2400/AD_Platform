@@ -2,11 +2,15 @@ const events = require('events').EventEmitter;
 const readline = require('readline');
 const fs = require('fs');
 const iconv = require('iconv-lite');
+
 var mod = {};
+
 const EventEmitter = new events();
+
 mod.on = function(event,callback){
     EventEmitter.on(event,callback);
 }
+
 mod.start = function(file){
     let input = fs.createReadStream(file);
 

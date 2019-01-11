@@ -1,14 +1,9 @@
 const events = require('events').EventEmitter;
 
-mod = function (str){
+mod = function (str,resolve){
     var HTTPParser = process.binding('http_parser').HTTPParser;
     parser = new HTTPParser(HTTPParser.REQUEST);
 
-    
-    //organize request content
-    str += `\n\n`;
-
-    request = new Buffer.from(str);
     const kOnHeadersComplete = HTTPParser.kOnHeadersComplete | 0; 
     const kOnBody = HTTPParser.kOnBody | 0; 
     const kOnMessageComplete = HTTPParser.kOnMessageComplete | 0; 
@@ -17,10 +12,13 @@ mod = function (str){
     var requests = {}; //The object that stores the http body
     var header = {}; //The object that stores the http headers
 
+    
+    //organize request content
     (function([a,b,c]){
         requests.time = b;
         requests.ser_ip = c;
     })(/^\[(.*?)\]\nSRC.*?IP: (.*?)\n/i.exec(str));
+
     str = str.replace(/^.*?\n.*?\n/,"");
 
     //Get the http request header content and organize it into an object
@@ -41,14 +39,18 @@ mod = function (str){
     //Get the complete request content
     parser[kOnBody] = 
     function() {
+        
         requests.body = arguments[0];
     }
 
     parser[kOnMessageComplete] = 
     function() { 
         requests.header = header;
+        
+        resolve(requests);
     } 
 
+    request = new Buffer.from(str);
     parser.execute(request);
 }
 module.exports = mod;
