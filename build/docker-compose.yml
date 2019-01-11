@@ -1,0 +1,10 @@
+version: '2'
+services:
+  web:
+    build: 
+      context: ../
+      dockerfile: build/Dockerfile
+    ports:
+     - "80:80"
+    volumes:
+     - /media/sf_koa-test:/root/platform
