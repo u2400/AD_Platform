@@ -7,7 +7,7 @@ var mod = function(path = "./web_log_10"){
             F_ConversionToObject(arguments[0],resolve);
         })
         .then((requests)=>{
-            //带插入逻辑写入数据库.
+            //写入数据库.
         })
         .catch((e)=>{
             console.log(e);
