@@ -1,2 +1,2 @@
-const log = require("./controller/log");
+var log = require("./controller/log");
 log();

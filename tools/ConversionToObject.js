@@ -5,8 +5,6 @@ mod = function (str,resolve){
     parser = new HTTPParser(HTTPParser.REQUEST);
 
     const kOnHeadersComplete = HTTPParser.kOnHeadersComplete | 0; 
-    const kOnBody = HTTPParser.kOnBody | 0; 
-    const kOnMessageComplete = HTTPParser.kOnMessageComplete | 0; 
     
     //Defining variables
     var requests = {}; //The object that stores the http body
@@ -20,7 +18,8 @@ mod = function (str,resolve){
     })(/^\[(.*?)\]\nSRC.*?IP: (.*?)\n/i.exec(str));
 
     str = str.replace(/^.*?\n.*?\n/,"");
-
+    requests.body = str;
+    str += "\n\n";
     //Get the http request header content and organize it into an object
     parser[kOnHeadersComplete] = 
     function() {
@@ -34,20 +33,9 @@ mod = function (str,resolve){
             }
             header[key] = value;
         }
-    }
-
-    //Get the complete request content
-    parser[kOnBody] = 
-    function() {
-        requests.body = arguments[0].toString();
-    }
-
-    parser[kOnMessageComplete] = 
-    function() { 
         requests.header = header;
-        
         resolve(requests);
-    } 
+    }
 
     request = new Buffer.from(str);
     parser.execute(request);
