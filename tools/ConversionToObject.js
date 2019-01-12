@@ -39,8 +39,7 @@ mod = function (str,resolve){
     //Get the complete request content
     parser[kOnBody] = 
     function() {
-        
-        requests.body = arguments[0];
+        requests.body = arguments[0].toString();
     }
 
     parser[kOnMessageComplete] = 
