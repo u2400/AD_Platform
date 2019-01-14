@@ -1,2 +1,1 @@
-var test = require("./model/mongodb");
-test("find",{$query: {}, $orderby: { time : -1 }});
+var test = require("./controller/log");

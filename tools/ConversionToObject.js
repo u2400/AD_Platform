@@ -13,7 +13,8 @@ mod = function (str,resolve){
     
     //organize request content
     (function([a,b,c]){
-        requests.time = b;
+        requests.time = ("20"+b);
+        requests.unixdate = Date.parse(requests.time);
         requests.ser_ip = c;
     })(/^\[(.*?)\]\nSRC.*?IP: (.*?)\n/i.exec(str));
 

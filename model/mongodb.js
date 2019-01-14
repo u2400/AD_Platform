@@ -1,30 +1,34 @@
 var MongoClient = require('mongodb');
+const events = require('events').EventEmitter;
+const EventEmitter = new events();
+const url = `mongodb://127.0.0.1:27017`; //Defining databases address
+const table = "site"; //database table name
 
 var mongo = function(){
     let act = arguments[0];
     let json = arguments[1];
     var funarr = {};
 
-    funarr["insert"] = function(dbo,json){
-        
+    //Defining database opreations
+    funarr["insert"] = function(dbo,json){   //Defining insert opreation
         if(json.constructor !== Array){
             json = [json];
         }
 
-        dbo.collection("site").insertMany( json , function(err, res) {
+        dbo.collection(table).insertMany( json , function(err, res) {
             if (err) throw err;
         });
     }
-
-    funarr["find"] = function(dbo,json){
+ 
+    funarr["find"] = function(dbo,json){ //Defining find opreation
         
-        dbo.collection("site").find({},{'projection':{time: 1}}).toArray(function(err, res) {
+        dbo.collection(table).find(...json).toArray(function(err, res) {
             if (err) throw err;
-            console.log(res);
+            EventEmitter.emit("message",res);
         });
     }
 
-    MongoClient.connect("mongodb://127.0.0.1:27017",{useNewUrlParser: true},function(err, client) {
+    MongoClient.connect(url,{useNewUrlParser: true},function(err, client) {
         if (err) {
             console.log(err)
         }
