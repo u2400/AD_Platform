@@ -35,6 +35,3 @@ var mongo = function(){
 }
 
 module.exports = mongo;
-
-  
-
