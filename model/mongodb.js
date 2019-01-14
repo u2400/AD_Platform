@@ -2,13 +2,17 @@ var MongoClient = require('mongodb');
 const events = require('events').EventEmitter;
 const EventEmitter = new events();
 const url = `mongodb://127.0.0.1:27017`; //Defining databases address
-const table = "site"; //database table name
+const table = "site"; //Defining database table name
 
-var mongo = function(){
+var mongo = {};
+mongo.on = function(event,callback){
+    EventEmitter.on(event,callback);
+}
+
+mongo.start = function(){
     let act = arguments[0];
     let json = arguments[1];
     var funarr = {};
-
     //Defining database opreations
     funarr["insert"] = function(dbo,json){   //Defining insert opreation
         if(json.constructor !== Array){
@@ -28,7 +32,7 @@ var mongo = function(){
         });
     }
 
-    MongoClient.connect(url,{useNewUrlParser: true},function(err, client) {
+    MongoClient.connect(url,{useNewUrlParser: true},(err, client)=>{
         if (err) {
             console.log(err);
         }

@@ -1,7 +1,11 @@
 const request = require("request");
 var Mongo = require("./model/mongodb");
 
-var r = Mongo("find", [{}, {
+Mongo.on("message",(res)=>{
+    console.log(res);
+})
+
+var r = Mongo.start("find", [{}, {
     'projection': {
         time: 1,
         unixdate: 1
