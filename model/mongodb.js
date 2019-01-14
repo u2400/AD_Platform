@@ -30,7 +30,7 @@ var mongo = function(){
 
     MongoClient.connect(url,{useNewUrlParser: true},function(err, client) {
         if (err) {
-            console.log(err)
+            console.log(err);
         }
         var dbo = client.db('log');
         funarr[act](dbo,json); 

@@ -10,4 +10,3 @@ var r = Mongo("find", [{}, {
         ['unixdate', 1]
     ]
 }]);
-

@@ -38,6 +38,7 @@ mod = function (str,resolve){
         resolve(requests);
     }
 
+    //convert raw logs from buffer to string
     request = new Buffer.from(str);
     parser.execute(request);
 }
