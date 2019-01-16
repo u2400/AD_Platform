@@ -1,8 +1,10 @@
 var Mongo = require("./model/mongodb");
 
 function F_send_request(request){
-    return new Promise((request)=>{
-        
+    let req = request;
+    return new Promise((req)=>{
+        console.log(request.header);
+        request
     })
 }
 
@@ -13,10 +15,10 @@ Mongo.on("message",(res)=>{
 })
 
 var r = Mongo.start("find", [{}, {
-    'projection': {
-        time: 1,
-        unixdate: 1
-    },
+    // 'projection': {
+    //     time: 1,
+    //     unixdate: 1
+    // },
     "sort": [
         ['unixdate', 1]
     ]

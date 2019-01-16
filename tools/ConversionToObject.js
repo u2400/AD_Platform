@@ -34,6 +34,37 @@ mod = function (str,resolve){
             }
             header[key] = value;
         }
+        let method;
+        switch(arguments[3]){
+            case 0:
+            method = "DELETE";
+            break;
+            case 1:
+            method = "GET";
+            break;
+            case 2:
+            method = "HEAD";
+            break;
+            case 3:
+            method = "POST";
+            break;
+            case 4:
+            method = "PUT";
+            break;
+            case 5:
+            method = "CONNECT";
+            break;
+            case 6:
+            method = "OPTIONS";
+            break;
+            case 7:
+            method = "TRACE";
+            break;
+            default:
+            method = "NOT FOUND!";
+            console.log("Warning, the type of http request not found, please check if the request is an http request !");
+        }
+        requests.method = method;
         requests.header = header;
         resolve(requests);
     }
