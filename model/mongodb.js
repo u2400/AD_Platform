@@ -4,7 +4,11 @@ const EventEmitter = new events();
 const url = `mongodb://127.0.0.1:27017`; //Defining databases address
 const table = "site"; //Defining database table name
 
-var mongo = {};
+function mongo(){
+    EventEmitter.call(this);
+}
+util.inherits(mongo,EventEmitter);
+
 mongo.on = function(event,callback){
     EventEmitter.on(event,callback);
 }
@@ -42,4 +46,4 @@ mongo.start = function(){
     })
 }
 
-module.exports = mongo;
+module.exports = new mongo;
