@@ -1,7 +1,15 @@
-var test = require("./controller/log");
 var Mongo = require("./model/mongodb");
+
+function F_send_request(request){
+    return new Promise((request)=>{
+        
+    })
+}
+
 Mongo.on("message",(res)=>{
-    console.log(res);
+    for(let i of res){
+        F_send_request(i);
+    }
 })
 
 var r = Mongo.start("find", [{}, {
