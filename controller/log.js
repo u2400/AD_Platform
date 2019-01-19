@@ -8,7 +8,7 @@ var mod = function(path = "./web_log_10"){
             F_ConversionToObject(arguments[0],resolve);
         })
         .then((requests)=>{
-            mongodb("insert",requests);
+            mongodb.start("insert",requests);
         })
         .catch((e)=>{
             console.log(e);
