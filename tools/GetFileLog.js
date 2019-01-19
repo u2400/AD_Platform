@@ -11,6 +11,7 @@ mod.on = function(event,callback){
     EventEmitter.on(event,callback);
 }
 
+//Pass the log file path and import the log from the file into the database
 mod.start = function(file){
     let input = fs.createReadStream(file);
 
