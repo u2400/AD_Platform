@@ -1,5 +1,6 @@
 var Mongo = require("./model/mongodb");
-
+var log = require(".//controller/log");
+log();
 function F_send_request(request){
     let req = request;
     return new Promise((req)=>{
@@ -14,7 +15,9 @@ Mongo.on("message",(res)=>{
     }
 })
 
-var r = Mongo.start("find", [{}, {
+var r = Mongo.start("find", [{
+    
+}, {
     // 'projection': {
     //     time: 1,
     //     unixdate: 1
@@ -22,4 +25,4 @@ var r = Mongo.start("find", [{}, {
     "sort": [
         ['unixdate', 1]
     ]
-}]);
+}])
