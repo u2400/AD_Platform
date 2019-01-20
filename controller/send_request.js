@@ -3,11 +3,15 @@ var Mongo = require("../model/mongodb");
 
 function F_send_request(req,host){
     return new Promise(function(resolve,reject){
-        console.log(req.method);
-        request({
-            method: req.method,
-            uri: host
-        },
+        let O_http_request = {};//Defining http request object
+
+        delete req.header.Host;
+        O_http_request.headers = req.header;
+        O_http_request.method = req.method;
+        O_http_request.uri = host;
+
+        console.log(O_http_request);
+        request(O_http_request,
         function (error, response, body) {
             if (error) {
                 reject(error);
@@ -31,7 +35,7 @@ var mod = function(data,host = "127.0.0.1"){
         for(let i of res){
             F_send_request(i,host)
             .then((res)=>{
-                console.log(res);
+                // console.log(res);
             })
             .catch((error)=>{
                 console.error(error);
