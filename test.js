@@ -5,7 +5,7 @@
 // send_req();
 
 // const O_GetLogFromFile = require("../tools/GetFileLog");
-
+var F_get_request_file = require("./tools/GetRequestFile");
 var a = `POST /index.php HTTP/1.1
 Host: 47.106.182.92
 Content-Length: 1578
@@ -33,7 +33,3 @@ Content-Type: application/octet-stream
 
 ?> 
 ------WebKitFormBoundaryCRTk4plP13QW7GDH--`;
-
-var Arr = a.match(/Content-Type\:.*?boundary=-*(.*;?)+/);
-var reg = new RegExp(`\n-*${Arr[1]}[\\s\\S]*?filename="(.*)"[\\s\\S]*?(?:Content-Type:.*)([\\s\\S]*?)-*${Arr[1]}--`);
-console.log(a.match(reg));
