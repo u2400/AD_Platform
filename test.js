@@ -33,3 +33,5 @@ Content-Type: application/octet-stream
 
 ?> 
 ------WebKitFormBoundaryCRTk4plP13QW7GDH--`;
+
+console.log(F_get_request_file(a));

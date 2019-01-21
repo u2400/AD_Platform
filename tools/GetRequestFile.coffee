@@ -1,11 +1,18 @@
 mod = (body) ->
     Arr = body.match(/Content-Type\:.*?boundary=-*(.*;?)+/)
-    reg = #将第一步获取的结果拼接进正则表达式
+    ###
+    the first step results into a regular expression
+    Determine whether it is a file based on whether there is filename
+    ###
+    reg = 
     """
-    \n-*#{Arr[1]}[\\s\\S]*?filename=\"(.*)\"[\\s\\S]*?(?:Content-Type:.*)([\\s\\S]*?)-*#{Arr[1]}--
-    """ #根据是否有filename判断是否是文件内容
+    \n-*#{Arr[1]}[\\s\\S]*?filename=\"(.*)\"[\\s\\S]*?(?:Content-Type:.*)([\\s\\S]*?)-*#{Arr[1]}
+    """ 
     reg = new RegExp(reg) #进行第二次匹配,获取文件内容
     if /[^0-9a-z\-]/.test(Arr[1])
-        return new Error("unexpected token")
-    body.match(reg)
+        new Error("unexpected token")
+    result = body.match(reg)
+    Obj =
+    file_name: result[1] 
+    file_content: result[2]
 module.exports = mod
