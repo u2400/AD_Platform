@@ -35,7 +35,6 @@ Content-Type: application/octet-stream
 ------WebKitFormBoundaryCRTk4plP13QW7GDH--`;
 
 var Arr = a.match(/Content-Type\:.*?boundary=-*(.*;?)+/);
-// var reg = new RegExp(`^-*${Arr[1]}[\\s\\S]*?${Arr[1]}`);
 var reg = new RegExp(`\n-*${Arr[1]}[\\s\\S]*?filename="(.*)"[\\s\\S]*?(?:Content-Type:.*)([\\s\\S]*?)-*${Arr[1]}--`);
 console.log(reg);
 console.log(a.match(reg));
