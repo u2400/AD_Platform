@@ -1,2 +1,2 @@
 node_modules/
-tools/GetRequestFile.js
+tools/*.js
