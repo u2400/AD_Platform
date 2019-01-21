@@ -36,5 +36,4 @@ Content-Type: application/octet-stream
 
 var Arr = a.match(/Content-Type\:.*?boundary=-*(.*;?)+/);
 var reg = new RegExp(`\n-*${Arr[1]}[\\s\\S]*?filename="(.*)"[\\s\\S]*?(?:Content-Type:.*)([\\s\\S]*?)-*${Arr[1]}--`);
-console.log(reg);
 console.log(a.match(reg));
