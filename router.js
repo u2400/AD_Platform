@@ -1,11 +1,10 @@
-const Router = require('koa-router');
-const log = require("./controller/log").mod;
+const fs = require('fs');
 
-var router = new Router()
-.get('/log',async(ctx,next)=>{
-    log(ctx);
-})
-.get('/hello',async(ctx,next)=>{
-    ctx.body = 'hello!';
-})
-module.exports = router;
+const routes = [];
+
+fs.readdirSync(`${require('path').join(__dirname,'./routers')}`)
+  .forEach(filename=>{
+    routes.push(require('path').join(__dirname,`./routers/${filename}`));
+  });
+
+module.exports = routes;
