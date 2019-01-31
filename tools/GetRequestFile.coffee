@@ -9,7 +9,7 @@ mod = (body) ->
     reg = """
     \n-*#{Arr[1]}[\\s\\S]*?filename=\"(.*)\"[\\s\\S]*?(?:Content-Type:.*)([\\s\\S]*?)-*#{Arr[1]}
     """
-    reg = new RegExp(reg) #进行第二次匹配,获取文件内容
+    reg = new RegExp(reg) #Make a second match to get the file contents
     
     if /[^0-9a-z\-]/.test(Arr[1])
         new Error("unexpected token")
