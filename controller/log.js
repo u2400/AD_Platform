@@ -1,6 +1,7 @@
 const O_GetLogFromFile = require("../tools/GetFileLog");
 const F_ConversionToObject = require("../tools/ConversionToObject");
 const mongodb = require("../model/mongodb");
+const F_GetRequestsFile = require("../tools/GetRequestFile");
 
 var mod = function(path = "./web_log_10"){
     O_GetLogFromFile.on("message",function(){
@@ -8,6 +9,10 @@ var mod = function(path = "./web_log_10"){
             F_ConversionToObject(arguments[0],resolve);
         })
         .then((requests)=>{
+            let File = F_GetRequestsFile(requests.body); //Get the file in the request
+            if(File != {}){
+                requests.file = File;
+            }
             mongodb.start("insert",requests);
         })
         .catch((e)=>{

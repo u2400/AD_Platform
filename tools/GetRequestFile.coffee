@@ -4,10 +4,13 @@ mod = (body) ->
     the first step results into a regular expression
     Determine whether it is a file based on whether there is filename
     ###
+    if !Arr
+        return Obj = {}
     reg = """
     \n-*#{Arr[1]}[\\s\\S]*?filename=\"(.*)\"[\\s\\S]*?(?:Content-Type:.*)([\\s\\S]*?)-*#{Arr[1]}
     """
     reg = new RegExp(reg) #进行第二次匹配,获取文件内容
+    
     if /[^0-9a-z\-]/.test(Arr[1])
         new Error("unexpected token")
     result = body.match(reg)

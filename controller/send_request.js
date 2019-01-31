@@ -22,10 +22,15 @@ function F_send_request(req,host){
 }
 
 function F_data_analysis(data){
-    return data 
+    if(!data || data==""){
+        return undefined;
+    }
+    return data ;
 }
 
-var mod = function(data,host = "127.0.0.1"){
+var mod = function(data = "",host = "127.0.0.1"){
+
+    data = F_data_analysis(data);
 
     if(host.search(/^https?:\/\//) == -1){
         host = "http://" + host;
@@ -43,9 +48,7 @@ var mod = function(data,host = "127.0.0.1"){
         }
     })
 
-    Mongo.start("find", [{
-
-    }, {
+    Mongo.start("find", [{data}, {
         "sort": [
             ['unixdate', 1]
         ]
