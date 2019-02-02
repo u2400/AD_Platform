@@ -1,6 +1,7 @@
 const request = require('request');
 var Mongo = require("../model/mongodb");
 
+
 function F_send_request(req,host){
     return new Promise(function(resolve,reject){
         let O_http_request = {};//Defining http request object
@@ -9,8 +10,9 @@ function F_send_request(req,host){
         O_http_request.headers = req.header;
         O_http_request.method = req.method;
         O_http_request.uri = host;
+        O_http_request.body = req.Post.join("&");
+        console.log(req)
 
-        console.log(O_http_request);
         request(O_http_request,
         function (error, response, body) {
             if (error) {
@@ -28,7 +30,7 @@ function F_data_analysis(data){
     return data ;
 }
 
-var mod = function(data = "",host = "127.0.0.1"){
+var mod = function(data = "",host = "127.0.0.1/nnnn.php"){
 
     data = F_data_analysis(data);
 
@@ -40,7 +42,7 @@ var mod = function(data = "",host = "127.0.0.1"){
         for(let i of res){
             F_send_request(i,host)
             .then((res)=>{
-                // console.log(res);
+                console.log(res);
             })
             .catch((error)=>{
                 console.error(error);
