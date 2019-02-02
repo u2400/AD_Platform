@@ -25,7 +25,7 @@ function F_send_request(req,host){
 
 function F_data_analysis(data){
     if(!data || data==""){
-        return undefined;
+        throw new Error("from component/send_request.js data must not be empty");
     }
     return data ;
 }
@@ -38,23 +38,24 @@ var mod = function(data = "",host = "127.0.0.1/nnnn.php"){
         host = "http://" + host;
     }
 
-    Mongo.on("message",(res)=>{
-        for(let i of res){
-            F_send_request(i,host)
-            .then((res)=>{
-                console.log(res);
-            })
-            .catch((error)=>{
-                console.error(error);
-            })
-        }
-    })
+    F_send_request(data, host);
+    // Mongo.on("message",(res)=>{
+    //     for(let i of res){
+    //         F_send_request(i,host)
+    //         .then((res)=>{
+    //             console.log(res);
+    //         })
+    //         .catch((error)=>{
+    //             console.error(error);
+    //         })
+    //     }
+    // })
 
-    Mongo.start("find", [{data}, {
-        "sort": [
-            ['unixdate', 1]
-        ]
-    }])
+    // Mongo.start("find", [{data}, {
+    //     "sort": [
+    //         ['unixdate', 1]
+    //     ]
+    // }])
 }
 
 module.exports = mod;
