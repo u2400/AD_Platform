@@ -5,16 +5,15 @@
       width="256px"
     >
       <div class="logo" />
+      <!-- @click="handleClick" -->
+      <!-- :openKeys.sync="openKeys" -->
       <a-menu
-    @click="handleClick"
-    style="width: 256px; padding: 16px 0px; width: 100%; border: 0px"
-    :defaultSelectedKeys="['1']"
-    :openKeys.sync="openKeys"
-    mode="inline"
-  >
+        style="width: 256px; padding: 16px 0px; width: 100%; border: 0px"
+        :defaultSelectedKeys="['1']"
+        mode="inline"
+      >
     <a-sub-menu 
       key="sub1" 
-      @titleClick="titleClick"
     >
       <span slot="title"><a-icon type="mail" /><span>Navigation One</span></span>
       <a-menu-item-group key="g1">
@@ -27,7 +26,7 @@
         <a-menu-item key="4">Option 4</a-menu-item>
       </a-menu-item-group>
     </a-sub-menu>
-    <a-sub-menu key="sub2" @titleClick="titleClick">
+    <a-sub-menu key="sub2">
       <span slot="title"><a-icon type="appstore" /><span>Navigation Two</span></span>
       <a-menu-item key="5">Option 5</a-menu-item>
       <a-menu-item key="6">Option 6</a-menu-item>
@@ -44,7 +43,6 @@
       <a-menu-item key="12">Option 12</a-menu-item>
     </a-sub-menu>
   </a-menu>
-      </a-menu>
     </a-layout-sider>
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: 0 }" />
