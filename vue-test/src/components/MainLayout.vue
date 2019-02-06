@@ -46,6 +46,7 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: 0}" />
+      <slot name="header"></slot>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
         <div id="Container" :style="{ padding: '24px', background: '#fff'}">
           <slot></slot>
