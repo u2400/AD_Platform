@@ -8,7 +8,9 @@ const routes = [
         path: '/test', component: WorkspaceManage
     },
     {
-        path: '/header', component: PageHeader
+        path: '/header', components: {
+            header: PageHeader
+        }
     }
 ]
 

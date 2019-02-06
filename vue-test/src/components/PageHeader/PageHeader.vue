@@ -1,4 +1,4 @@
-<template slot="header">
+<template>
     <div class="pageHeader">
         <slot></slot>
     </div>
