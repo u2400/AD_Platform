@@ -1,0 +1,123 @@
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.pageHeader {
+    background: #fff;
+    padding: 16px 32px 0 32px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .pageHeader .wide {
+    max-width: 1200px;
+    margin: auto;
+  }
+  .pageHeader .detail {
+    display: flex;
+  }
+  .pageHeader .row {
+    display: flex;
+    width: 100%;
+  }
+  .pageHeader .breadcrumb {
+    margin-bottom: 16px;
+  }
+  .pageHeader .tabs {
+    margin: 0 0 0 -8px;
+  }
+  .pageHeader .tabs :global .ant-tabs-bar {
+    border-bottom: none;
+    margin-bottom: 1px;
+  }
+  .pageHeader .logo {
+    flex: 0 1 auto;
+    margin-right: 16px;
+    padding-top: 1px;
+  }
+  .pageHeader .logo > img {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: block;
+  }
+  .pageHeader .title {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .pageHeader .action {
+    margin-left: 56px;
+    min-width: 266px;
+  }
+  .pageHeader .action :global .ant-btn-group:not(:last-child),
+  .pageHeader .action :global .ant-btn:not(:last-child) {
+    margin-right: 8px;
+  }
+  .pageHeader .action :global .ant-btn-group > .ant-btn {
+    margin-right: 0;
+  }
+  .pageHeader .title,
+  .pageHeader .content {
+    flex: auto;
+  }
+  .pageHeader .action,
+  .pageHeader .extraContent,
+  .pageHeader .main {
+    flex: 0 1 auto;
+  }
+  .pageHeader .main {
+    width: 100%;
+  }
+  .pageHeader .title,
+  .pageHeader .action {
+    margin-bottom: 16px;
+  }
+  .pageHeader .logo,
+  .pageHeader .content,
+  .pageHeader .extraContent {
+    margin-bottom: 16px;
+  }
+  .pageHeader .action,
+  .pageHeader .extraContent {
+    text-align: right;
+  }
+  .pageHeader .extraContent {
+    margin-left: 88px;
+    min-width: 242px;
+  }
+  @media screen and (max-width: 1200px) {
+    .pageHeader .extraContent {
+      margin-left: 44px;
+    }
+  }
+  @media screen and (max-width: 992px) {
+    .pageHeader .extraContent {
+      margin-left: 20px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .pageHeader .row {
+      display: block;
+    }
+    .pageHeader .action,
+    .pageHeader .extraContent {
+      margin-left: 0;
+      text-align: left;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .pageHeader .detail {
+      display: block;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .pageHeader .action :global .ant-btn-group,
+    .pageHeader .action :global .ant-btn {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .pageHeader .action :global .ant-btn-group > .ant-btn {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+  }
+  

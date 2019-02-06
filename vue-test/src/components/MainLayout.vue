@@ -15,7 +15,7 @@
     <a-sub-menu 
       key="sub1" 
     >
-      <span slot="title"><a-icon type="mail" /><span>Navigation One</span></span>
+      <span slot="title"><a-icon type="mail" /><span>日志管理</span></span>
       <a-menu-item-group key="g1">
         <template slot="title"><a-icon type="qq" /><span>Item 1</span></template>
         <a-menu-item key="1">Option 1</a-menu-item>
@@ -45,10 +45,10 @@
   </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header :style="{ background: '#fff', padding: 0 }" />
+      <a-layout-header :style="{ background: '#fff', padding: 0}" />
       <a-layout-content :style="{ margin: '24px 16px 0' }">
-        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-          content
+        <div id="Container" :style="{ padding: '24px', background: '#fff'}">
+          <slot></slot>
         </div>
       </a-layout-content>
       <a-layout-footer style="textAlign: center">
@@ -67,30 +67,14 @@ export default {
     }
   },
 }
+
+window.onload = function(){
+  document.getElementById("Container").style.minHeight = `${Number(window.screen.availHeight) - 230}px`;
+  console.log(window.screen.availHeight);
+}
 </script>
 
 <style>
-/* #main-layoyt .a-layout-sider{
-  background: #fff;
-}
-
-#main-layout .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color .3s;
-}
-
-#main-layout .trigger:hover {
-  color: #1890ff;
-}
-
-#main-layout .logo {
-  height: 32px;
-  background: #fff;
-  margin: 16px;
-} */
 
 .logo {
   height: 64px;
@@ -180,6 +164,13 @@ export default {
 }
 :global .ant-drawer-left .ant-drawer-body {
   padding: 0;
+}
+
+.ant-layout-header {
+  height: 64px;
+  padding: 0;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 </style>
 

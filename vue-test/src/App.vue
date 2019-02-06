@@ -1,15 +1,21 @@
 
 <template>
-  <main-layout>123</main-layout>
+  <main-layout>
+    <router-view></router-view>
+  </main-layout>
 </template>
 
 
 <script>
-import MainLayout from "./components/MainLayout.vue"
+import MainLayout from "./components/MainLayout.vue";
+import WorkspaceManage from "./components/WorkspaceManage.vue";
+import PageHeader from "./components/PageHeader/PageHeader.vue";
 
 export default {
   components: {
-    "main-layout" : MainLayout,
+    "main-layout": MainLayout,
+    "WorkspaceManage": WorkspaceManage,
+    "PageHeader": PageHeader
   },
   name : "app",
   data(){
