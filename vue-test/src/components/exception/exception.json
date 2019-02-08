@@ -1,0 +1,23 @@
+{
+    "404": {
+        "content": {
+            "statusCode": "404",
+            "statusMessage": "抱歉，你访问的页面不存在",
+            "imgurl": "/404.svg"
+        }  
+    },
+    "403": {
+        "content": {
+            "statusCode": "403",
+            "statusMessage": "抱歉，你无权访问该页面",
+            "imgurl": "/403.svg"
+        }
+    },
+    "500": {
+        "content": {
+            "statusCode": "500",
+            "statusMessage": "抱歉，服务器出错了",
+            "imgurl": "/500.svg"
+        }
+    }
+}

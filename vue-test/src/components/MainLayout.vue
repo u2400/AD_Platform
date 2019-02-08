@@ -16,10 +16,9 @@
       key="sub1" 
     >
       <span slot="title"><a-icon type="mail" /><span>日志管理</span></span>
-      <a-menu-item-group key="g1">
-        <template slot="title"><a-icon type="qq" /><span>Item 1</span></template>
-        <a-menu-item key="1">Option 1</a-menu-item>
-        <a-menu-item key="2">Option 2</a-menu-item>
+      <a-menu-item-group key="g1" title="Item 2">
+        <a-menu-item key="1"><router-link to="/test">工作区管理</router-link></a-menu-item>
+        <a-menu-item key="2">日志中上传文件管理</a-menu-item>
       </a-menu-item-group>
       <a-menu-item-group key="g2" title="Item 2">
         <a-menu-item key="3">Option 3</a-menu-item>
@@ -48,9 +47,7 @@
       <a-layout-header :style="{ background: '#fff', padding: 0}" />
       <slot name="header"></slot>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
-        <div id="Container" :style="{ padding: '24px', background: '#fff'}">
-          <slot></slot>
-        </div>
+        <slot name="body"></slot>
       </a-layout-content>
       <a-layout-footer style="textAlign: center">
         Ant Design ©2018 Created by Ant UED
@@ -67,11 +64,6 @@ export default {
       collapsed: false,
     }
   },
-}
-
-window.onload = function(){
-  document.getElementById("Container").style.minHeight = `${Number(window.screen.availHeight) - 230}px`;
-  console.log(window.screen.availHeight);
 }
 </script>
 
@@ -103,13 +95,13 @@ window.onload = function(){
   font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: 600;
 }
-.sider {
+.ant-layout-sider {
   min-height: 100vh;
-  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
   position: relative;
   z-index: 10;
 }
-.sider.fixSiderBar {
+.ant-layout-sider .fixSiderBar {
   box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
   position: fixed;
   top: 0;
@@ -172,6 +164,7 @@ window.onload = function(){
   padding: 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  margin: 0px 0px 1px 0px;
 }
 </style>
 

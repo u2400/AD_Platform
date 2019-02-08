@@ -1,6 +1,6 @@
 <template>
     <div class="pageHeader">
-        <slot></slot>
+        <div v-html="content"></div>
     </div>
 </template>
 
@@ -8,7 +8,9 @@
 import "./PageHeader.css";
 
 export default {
+    props: ['content'],
     name: "PageHeader",
 }
+
 </script>
 
