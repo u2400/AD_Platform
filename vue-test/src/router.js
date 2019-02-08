@@ -6,6 +6,7 @@ import PageHeaderConetent from "./components/PageHeader/PageHeader.json";
 import Exception from "./components/exception/exception.vue";
 import Body from "./components/body/body.vue";
 import ExceptionContent from "./components/exception/exception.json";
+import LogManage from "./components/LogManage/LogManage.vue";
 
 const routes = [
     {
@@ -24,6 +25,14 @@ const routes = [
         props: {
             header: PageHeaderConetent['test']
         }
+    },
+    {
+        path: '/logmanage', components:{
+            body: Body
+        },
+        children:[
+            { path: "", component: LogManage }
+        ],
     },
     {
         path: "*", components: {

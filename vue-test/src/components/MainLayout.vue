@@ -17,7 +17,7 @@
     >
       <span slot="title"><a-icon type="mail" /><span>日志管理</span></span>
       <a-menu-item-group key="g1" title="Item 2">
-        <a-menu-item key="1"><router-link to="/test">工作区管理</router-link></a-menu-item>
+        <a-menu-item key="1"><router-link to="/workspacemanage">日志工作区管理</router-link></a-menu-item>
         <a-menu-item key="2">日志中上传文件管理</a-menu-item>
       </a-menu-item-group>
       <a-menu-item-group key="g2" title="Item 2">
