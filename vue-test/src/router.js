@@ -7,6 +7,7 @@ import Exception from "./components/exception/exception.vue";
 import Body from "./components/body/body.vue";
 import ExceptionContent from "./components/exception/exception.json";
 import LogManage from "./components/LogManage/LogManage.vue";
+import test from "./components/test/test.vue";
 
 const routes = [
     {
@@ -32,6 +33,14 @@ const routes = [
         },
         children:[
             { path: "", component: LogManage }
+        ],
+    },
+    {
+        path: "/test", components:{
+            body: Body
+        },
+        children:[
+            { path: "", component: test }
         ],
     },
     {

@@ -21,7 +21,7 @@
         <a-menu-item key="2">日志中上传文件管理</a-menu-item>
       </a-menu-item-group>
       <a-menu-item-group key="g2" title="Item 2">
-        <a-menu-item key="3">Option 3</a-menu-item>
+        <a-menu-item key="3"><router-link to="/test">testPage</router-link></a-menu-item>
         <a-menu-item key="4">Option 4</a-menu-item>
       </a-menu-item-group>
     </a-sub-menu>
@@ -49,9 +49,6 @@
       <a-layout-content :style="{ margin: '24px 16px 0' }">
         <slot name="body"></slot>
       </a-layout-content>
-      <a-layout-footer style="textAlign: center">
-        Ant Design ©2018 Created by Ant UED
-      </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
