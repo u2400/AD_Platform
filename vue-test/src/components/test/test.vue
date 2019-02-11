@@ -51,9 +51,6 @@ const unfilted_data = [{
 export default {
   data () {
     return {
-      filter_input: '',
-      unfilted_data,
-      filter: '',
       searchText: '',
       searchInput: null,
       columns: [{
@@ -69,19 +66,22 @@ export default {
         dataIndex: 'address',
         key: 'address',
       }],
+      filter_input: '',
+      unfilted_data,
+      filter: '',
       xss_filter: function (str) {
         let str1 = str.replace(/(?:\\\\|\\\=)/g,"");
         if(/\=/.test(str1)){
           this.$message.error('搜索失败,搜索条件中所有的等号必须都被转义');
           return false;
         }
-        let str2 = str.replace(/\/.*?\//g,"");
+        let str2 = str.replace(/(\\\/|\\\\|\\\(|\\\))/g,"");
+        str2 = str2.replace(/\/.*?\//g,"");
         if(/[^\(\)\&\|]\s*?\(.*?\)/.test(str2)){
           this.$message.error('搜索失败,搜索条件中不得包含函数调用');
           return false;
         }
-        return true;
-        let str3 = str.replace(/(?!\\)\(.*?(?!\\)\)/g,"");
+        let str3 = str1.replace(/(?!\\)\(.*?(?!\\)\)/g,"");
         if(/(?!\\)\(/.test(str3)){
           this.$message.error("搜索失败,搜索条件中存在未闭合的'('");
           return false;
@@ -90,6 +90,8 @@ export default {
           this.$message.error("搜索失败,搜索条件中存在未闭合的')'");
           return false;
         }
+
+        return true;
       }
     }
   },
@@ -104,6 +106,7 @@ export default {
       }
       else{
         if(!this.xss_filter(filter)){
+          this.filter = "null";
           return [];
         }
         try{
@@ -123,9 +126,10 @@ export default {
           });
         }
         catch(e){
-          return [];
           this.$message.error('搜索失败,请确认语法是否正确');
+          this.filter = "null";
           console.error(e);
+          return [];
         }
       }
       return local_data;
