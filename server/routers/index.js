@@ -1,8 +1,6 @@
 const express = require('express');
 const router = new express.Router();
 const log = require('../controller/log.js');
-const test = require("../test");
-const Requests = require("../controller/send_request");
 
 router
     .get('/log',(req,res)=>{
@@ -10,8 +8,7 @@ router
         return res.send("OK!");
     })
     .get('/test',(req,res)=>{
-        test();
-        return res.send("OK!");
+        return res.send(file_download());
     })
     .get('/send',(req,res)=>{
         Requests();
