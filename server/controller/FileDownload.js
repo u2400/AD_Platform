@@ -1,9 +1,9 @@
-const O_Mongo = require("../model/mongodb");
+const F_FileDownload = require("../component/FileDown-getfile");
 
-var mod = function(){
-    O_Mongo.on("messgae",function(){
-
+mod = function(id){
+    F_FileDownload(id)
+    .then(function(a){
+        return a;
     })
-
-    return new Buffer();
 }
+module.exports = mod;
