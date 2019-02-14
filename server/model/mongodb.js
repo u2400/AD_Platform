@@ -12,9 +12,10 @@ mongo.start = function(){
     let act = arguments[0];
     let json = arguments[1];
     let table = arguments[2] || "site" //Defining database table name
-    var funarr = {};
+    var O_Operating_List = {};
     //Defining database opreations
-    funarr["insert"] = function(dbo,json){   //Defining insert opreation
+
+    O_Operating_List["insert"] = function(dbo,json){   //Defining insert opreation
         if(json.constructor !== Array){
             json = [json];
         }
@@ -24,7 +25,7 @@ mongo.start = function(){
         });
     }
  
-    funarr["find"] = function(dbo,json){ //Defining find opreation
+    O_Operating_List["find"] = function(dbo,json){ //Defining find opreation
         
         dbo.collection(table).find(...json).toArray(function(err, res) {
             if (err) throw err;
@@ -32,12 +33,17 @@ mongo.start = function(){
         });
     }
 
+    O_Operating_List["delete"] = function(dbo,json,JustOne = true){ //Defining delete opreation
+        let Type = JustOne ? "deleteOne" : "deleteMany"; //Whether to delete only one record
+        dbo.collection(table)[Type](json);
+    }
+
     MongoClient.connect(url,{useNewUrlParser: true},(err, client)=>{
         if (err) {
             console.log(err);
         }
         var dbo = client.db('log');
-        funarr[act](dbo,json); 
+        O_Operating_List[act](dbo,json); 
         client.close();
     })
 }

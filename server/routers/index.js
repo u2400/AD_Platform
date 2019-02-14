@@ -6,13 +6,13 @@ const file_download = require("../controller/FileDownload");
 router
     .get('/log',(req,res)=>{
         // log();
-        return res.send(`<a href="/test">test</a>`);
+        return res.send(`<a href="/test/5c540823294a3231e02ca4a3">test</a>`);
     })
-    .get('/test',(req,res)=>{
-        // let [name,content] = file_download("5c540823294a3231e02ca4a3");
-        console.log(file_download("5c540823294a3231e02ca4a3"));
-        // res.setHeader('Content-disposition', 'attachment; filename=' + name);
-        res.send("OK!");
+    .get('/test/:id',async (req,res)=>{
+        let [name,content] = await file_download(req.params.id);
+        console.log("END!",name,content);
+        res.setHeader('Content-disposition', 'attachment; filename=' + name);
+        return res.send(new Buffer.from(content));
     })
     .get('/send',(req,res)=>{
         Requests();
