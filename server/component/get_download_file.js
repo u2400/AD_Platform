@@ -2,7 +2,7 @@ const O_Mongo = require("../model/mongodb");
 var ObjectId = require('mongodb').ObjectId;
 
 var mod = async function(id){
-    return new Promise(function(resolve, reject){
+    return new Promise((resolve, reject)=>{
         var file = "";
         O_Mongo.on("message",function(res){
             file = res[0].file;

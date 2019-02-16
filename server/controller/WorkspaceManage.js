@@ -13,14 +13,16 @@ mod = function(){
     }
 
     O_Operating_List["rename"] = function(new_name, old_name){
-        O_MongoDB.start("update",[{WorkspaceName: old_name},{WorkspaceName: new_name}],db_name);
+        O_MongoDB.start("update",[{WorkspaceName: old_name},{WorkspaceName: new_name}],{table_name: db_name, JustOne});
     }
 
     O_Operating_List["show"] = async function(){
-        O_MongoDB.on("message",function(res){
-            console.log(res);
-
-        })
+        return new Promise((resolve,reject)=>{
+            O_MongoDB.on("message",function(res){
+                resolve(res);
+            })
+            O_MongoDB.start("find",{},{table_name: db_name});
+        });
     }
 }
 module.exports = mod;
