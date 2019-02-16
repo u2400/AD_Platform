@@ -11,31 +11,42 @@ mongo.on = function(event,callback){
 mongo.start = function(){
     let act = arguments[0];
     let json = arguments[1];
-    let table = arguments[2] || "site" //Defining database table name
+    var option = arguments[2] || {};
+
+    //Defining database table name
+    option.table_name == undefined ? option.table_name = "site" : null ;
+
     var O_Operating_List = {};
     //Defining database opreations
 
-    O_Operating_List["insert"] = function(dbo,json){   //Defining insert opreation
+    O_Operating_List["insert"] = function(dbo,option,json){   //Defining insert opreation
         if(json.constructor !== Array){
             json = [json];
         }
 
-        dbo.collection(table).insertMany( json , function(err, res) {
+        dbo.collection(option.table_name).insertMany( json , function(err, res) {
             if (err) throw err;
         });
     }
  
-    O_Operating_List["find"] = function(dbo,json){ //Defining find opreation
+    O_Operating_List["find"] = function(dbo,option,json){ //Defining find opreation
         
-        dbo.collection(table).find(...json).toArray(function(err, res) {
+        dbo.collection(option.table_name).find(...json).toArray(function(err, res) {
             if (err) throw err;
             EventEmitter.emit("message",res);
         });
     }
 
-    O_Operating_List["delete"] = function(dbo,json,JustOne = true){ //Defining delete opreation
+    O_Operating_List["delete"] = function(dbo,option,json){ //Defining delete opreation
+        option.JustOne = option.JustOne || true;
         let Type = JustOne ? "deleteOne" : "deleteMany"; //Whether to delete only one record
-        dbo.collection(table)[Type](json);
+        dbo.collection(option.table_name)[Type](json);
+    }
+
+    O_Operating_List["update"] = function(dbo,option,json){
+        option.JustOne = option.JustOne || true;
+        let Type = JustOne ? "updateOne" : "updateMany";
+        dbo.collection(option.table_name)[Type](...json);
     }
 
     MongoClient.connect(url,{useNewUrlParser: true},(err, client)=>{
@@ -43,7 +54,7 @@ mongo.start = function(){
             console.log(err);
         }
         var dbo = client.db('log');
-        O_Operating_List[act](dbo,json); 
+        O_Operating_List[act](dbo,option,json);
         client.close();
     })
 }
