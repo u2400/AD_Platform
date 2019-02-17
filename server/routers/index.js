@@ -9,6 +9,12 @@ router
     .get('/',(req,res)=>{
         return res.send(`<a href="/download/5c540823294a3231e02ca4a3">test</a>`);
     })
+    .get('/api/getlogfile/:Workspace_name',(req,res)=>{
+        return res.send(`OK`);
+    })
+    .get('/api/getallfile/:Workspace_name',(req,res)=>{
+        return res.send(`OK`);
+    })
     .get('/get_log/:Workspace_name',(req,res)=>{
         return res.send(
             // F_WorkSpaceManage[]
