@@ -13,6 +13,8 @@ mongo.start = function(){
     let json = arguments[1];
     var option = arguments[2] || {};
 
+    //Defining database name
+    option.db_name == undefined ? option.db_name = "log" : null ;
     //Defining database table name
     option.table_name == undefined ? option.table_name = "site" : null ;
 
@@ -53,7 +55,7 @@ mongo.start = function(){
         if (err) {
             console.log(err);
         }
-        var dbo = client.db('log');
+        var dbo = client.db(option.db_name);
         O_Operating_List[act](dbo,option,json);
         client.close();
     })
