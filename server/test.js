@@ -20,3 +20,4 @@
 // console.log(`Cookie:${Cookie}`,`random_hash:${random_hash}`);
 // var res = pass.LoginCookieChecker([Cookie, random_hash, username, key, ip]);
 // console.log(res);
+console.log(__dirname);
