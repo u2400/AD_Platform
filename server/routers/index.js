@@ -7,8 +7,9 @@ const F_LogManage = require("../controller/LogManage");
 require("../test");
 
 router
-    .use((req, res)=>{
+    .use((req, res, next)=>{
         console.log(req,res);
+        next();
     })
     .get('/',(req,res)=>{
         res.cookie('nick', {username:"gcc", _k:"123", _r:"321"}, {signed: true, httpOnly: true});

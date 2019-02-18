@@ -28,7 +28,7 @@ const routes = [
         }
     },
     {
-        path: '/logmanage', components:{
+        path: '/logmanage/:workspace', components:{
             body: Body
         },
         children:[
