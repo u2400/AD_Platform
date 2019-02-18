@@ -3,6 +3,7 @@ const router = new express.Router();
 const log = require('../controller/log.js');
 const F_file_download = require("../controller/FileDownload");
 const F_WorkSpaceManage = require("../controller/WorkspaceManage");
+const F_LogManage = require("../controller/LogManage");
 require("../test");
 
 router
@@ -14,10 +15,12 @@ router
     .get('/api/getlogfile/:Workspace_name',(req,res)=>{
         return res.send(`OK`);
     })
-    .get('/api/getallfile/:Workspace_name',(req,res)=>{
-        return res.send(`OK`);
+    .get('/api/getallfile/:Workspace_name',async (req,res)=>{
+        res.setHeader('Content-Type', 'application/json');
+        var log = await F_LogManage("show",[req.params.Workspace_name]);
+        return res.json(log);
     })
-    .get('/get_log/:Workspace_name',(req,res)=>{
+    .get('/api/getworkspace',(req,res)=>{
         return res.send(
             // F_WorkSpaceManage[]
         );

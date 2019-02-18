@@ -18,6 +18,7 @@ mongo.start = function(){
     //Defining database table name
     option.table_name == undefined ? option.table_name = "site" : null ;
 
+    console.log("Option:",option)
     var O_Operating_List = {};
     //Defining database opreations
 

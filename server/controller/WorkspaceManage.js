@@ -16,7 +16,7 @@ var mod = function(act,value){
     }
 
     O_Operating_List["rename"] = function(new_name, old_name){
-        O_MongoDB.start("update",[{WorkspaceName: old_name},{WorkspaceName: new_name}],{db_name: db_name, table_name: table_name, JustOne});
+        O_MongoDB.start("update",[{WorkspaceName: old_name},{WorkspaceName: new_name}],{db_name: db_name, table_name: table_name, JustOne: true});
         return true
     }
 
