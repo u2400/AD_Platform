@@ -7,20 +7,23 @@ const F_LogManage = require("../controller/LogManage");
 require("../test");
 
 router
+    .use((req, res)=>{
+        console.log(req,res);
+    })
     .get('/',(req,res)=>{
         res.cookie('nick', {username:"gcc", _k:"123", _r:"321"}, {signed: true, httpOnly: true});
         console.log(req.signedCookies);
         return res.send(`<a href="/download/5c540823294a3231e02ca4a3">test</a>`);
     })
-    .get('/api/getlogfile/:Workspace_name',(req,res)=>{
+    .get('/getlogfile/:Workspace_name',(req,res)=>{
         return res.send(`OK`);
     })
-    .get('/api/getallfile/:Workspace_name',async (req,res)=>{
+    .get('/getallfile/:Workspace_name',async (req,res)=>{
         res.setHeader('Content-Type', 'application/json');
         var log = await F_LogManage("show",[req.params.Workspace_name]);
         return res.json(log);
     })
-    .get('/api/getworkspace',(req,res)=>{
+    .get('/getworkspace',(req,res)=>{
         return res.send(
             // F_WorkSpaceManage[]
         );
@@ -36,9 +39,10 @@ router
      })
     .use(function (err, req, res, next) {
         console.log(err);
-        res.status(500).send('服务发生错误');
+        res.setHeader('Content-Type', 'application/json');
+        res.status(500).json({error:"server error"});
     });
 
 module.exports = (app)=>{
-    app.use('/',router);
+    app.use('/api',router);
 }
