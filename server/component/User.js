@@ -6,15 +6,22 @@
 const O_Mongo = require("../model/mongodb");
 const O_Password = require("../tools/Passwod");
 
-mod = function(act, value){
+function login_successful(){
+
+}
+
+
+mod = function(act, value, req, res){
     var O_Operating_List = {};
 
     O_Operating_List['login'] = function(username, password){
-        O_Mongo.on("message",(res)=>{
-            console.log(res);
+        O_Mongo.on("message",(ret)=>{
+            console.log(ret);
             //TODO...
-            //res = O_Password.Checker([password,slat,Key]); //slat 和 key 来自数据库
-            return res;
+              //slat 和 key 来自数据库
+            if(O_Password.Checker([password,slat,Key])){
+                login_successful(res,req);
+            }
         })
 
         O_Mongo.start('find',[{"username":username},{'projection':{password: 1, slat:1, _id:0 }}]);

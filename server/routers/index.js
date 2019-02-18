@@ -7,6 +7,8 @@ require("../test");
 
 router
     .get('/',(req,res)=>{
+        res.cookie('nick', {username:"gcc", _k:"123", _r:"321"}, {signed: true, httpOnly: true});
+        console.log(req.signedCookies);
         return res.send(`<a href="/download/5c540823294a3231e02ca4a3">test</a>`);
     })
     .get('/api/getlogfile/:Workspace_name',(req,res)=>{

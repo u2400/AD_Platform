@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 const app = new express();
 
 app.use(bodyparser.json());
-app.use(cookieParser());
+app.use(cookieParser(cfg.web.key));
 app.use(bodyparser.urlencoded());
 app.use('/assets',express.static(require('path').join(__dirname,'../assets')));
 routes.forEach(route=>{
