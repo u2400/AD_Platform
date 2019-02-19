@@ -8,7 +8,6 @@ require("../test");
 
 router
     .use((req, res, next)=>{
-        res.setHeader('X-Powered-By', '');
         res.setHeader('auth', 'isauth');
         // if(Math.random()>0.5){
         //     res.status(302).location("/");
