@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser')
 const app = new express();
 
 app.use(bodyparser.json());
-// app.use(express.static());
 app.use(cookieParser(cfg.web.key));
 app.use(bodyparser.urlencoded());
 app.use('/',express.static(require('path').join(__dirname,'./assert')));

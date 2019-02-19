@@ -1,6 +1,6 @@
 <template>
   <a-table :columns="columns" :dataSource="data">
-    <a slot="name" slot-scope="text" href="javascript:;">{{text}}</a>
+    <router-link slot="name" slot-scope="text" :to="`/logmanage/${text}`" > {{text}} </router-link>
     <span slot="customTitle"><a-icon type="smile-o" /> 工作区名称</span>
     <span slot="action" slot-scope="text">
       <a href="javascript:;">添加日志内容</a>
