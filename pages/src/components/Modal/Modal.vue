@@ -2,11 +2,10 @@
     <ary>
         <a href="javascript:;" @click="showModal">添加日志内容</a>
         <a-modal
-        title="Basic Modal"
         v-model="visible"
         @ok="handleOk"
         >
-            <a-upload-dragger name="file" :multiple="true" :action=" '/api/'+ workspace_name " @change="handleChange">
+            <a-upload-dragger name="file" :multiple="true" :action=" '/api/uploadlog/'+ workspace_name " @change="handleChange">
                 <p class="ant-upload-drag-icon">
                     <a-icon type="inbox" />
                 </p>

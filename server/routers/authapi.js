@@ -17,7 +17,7 @@ router
         // }
         next();
     })
-    .post("/", async (req,res)=>{
+    .post('/uploadlog/:Workspace_name',async (req,res)=>{
         let err = await upload(req, res).catch((err)=>{
             return err.toString();
         })
@@ -25,11 +25,7 @@ router
             return res.status(500).json({error: err});
         }
         console.log(req.files);
-        return res.json({id:101});
-    })
-    .post('/uploadlog/:Workspace_name',(req,res)=>{
-        log(path, req.params.Workspace_name);
-        return res.send(`<a href="/download/5c540823294a3231e02ca4a3">test</a>`);
+        return res.json({state:403});
     })
     .get('/getlogfile/:Workspace_name',(req,res)=>{
         return res.send(`OK`);
