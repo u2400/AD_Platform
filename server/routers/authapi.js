@@ -4,6 +4,8 @@ const log = require('../controller/log.js');
 const F_file_download = require("../controller/FileDownload");
 const F_WorkSpaceManage = require("../controller/WorkspaceManage");
 const F_LogManage = require("../controller/LogManage");
+const upload = require("../tools/FileUpload");
+var multer = require('multer');
 require("../test");
 
 router
@@ -15,7 +17,17 @@ router
         // }
         next();
     })
-    .get('/uploadlog/:Workspace_name',(req,res)=>{
+    .post("/", async (req,res)=>{
+        let err = await upload(req, res).catch((err)=>{
+            return err.toString();
+        })
+        if(err) {
+            return res.status(500).json({error: err});
+        }
+        console.log(req.files);
+        return res.json({id:101});
+    })
+    .post('/uploadlog/:Workspace_name',(req,res)=>{
         log(path, req.params.Workspace_name);
         return res.send(`<a href="/download/5c540823294a3231e02ca4a3">test</a>`);
     })
@@ -32,7 +44,6 @@ router
     })
     .get('/download/:id',async (req,res)=>{
         let [name,content] = await F_file_download(req.params.id);
-        console.log("END!",name,content);
         res.setHeader('Content-disposition', 'attachment; filename=' + name);
         return res.send(new Buffer.from(content));
     })
@@ -41,7 +52,6 @@ router
      })
     .use(function (err, req, res, next) {
         console.log(err);
-        res.setHeader('Content-Type', 'application/json');
         res.status(500).json({error:"server error"});
     });
 

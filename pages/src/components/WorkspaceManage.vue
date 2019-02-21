@@ -3,7 +3,7 @@
     <router-link slot="name" slot-scope="text" :to="`/logmanage/${text}`" > {{text}} </router-link>
     <span slot="customTitle"><a-icon type="smile-o" /> 工作区名称</span>
     <span slot="action" slot-scope="text">
-      <a href="javascript:;">添加日志内容</a>
+      <model :workspace_name="text.name"></model>
       <a-divider type="vertical" />
       <a href="javascript:;">删除工作区</a>
     </span>
@@ -44,12 +44,18 @@ const data = [{
   time: '2017-12-26',
 }];
 
+import Model from "./Modal/Modal.vue";
+
+
 export default {
+  components: {
+    "model": Model
+  },
   data() {
     return {
       data,
       columns,
     }
-  }
+  },
 }
 </script>

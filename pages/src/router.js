@@ -50,7 +50,7 @@ const routes = [
         props: {
             body: ExceptionContent['404'],
         }
-    }
+    },
 ]
 
 Vue.use(VueRouter)
