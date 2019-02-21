@@ -11,8 +11,8 @@ var mod = function(act,value){
             let id = arr.pop();
             id_arr.push({"_id" : ObjectId(id)});
         }
-        O_MongoDB.start("delete",{$or: id_arr},{table_name: table_name, JustOne: false});
-        return true
+        O_MongoDB.start("delete",[{$or: id_arr}],{table_name: table_name, JustOne: false});
+        return true;
     }
 
     O_Operating_List["show"] = async function(table_name){
@@ -25,6 +25,15 @@ var mod = function(act,value){
         });
     }
 
-    return O_Operating_List[act](...value);
+    try{
+        var res = O_Operating_List[act](...value);
+    }
+    catch(e){
+        res = false;
+        throw e;
+    }
+    finally {
+        return res;
+    }
 }
 module.exports = mod;

@@ -15,7 +15,7 @@ mod = function (str,resolve){
     (function([a,b,c]){
         requests.time = ("20"+b);
         requests.unixdate = Date.parse(requests.time);
-        requests.ser_ip = c;
+        requests.src_ip = c;
     })(/^\[(.*?)\]\nSRC.*?IP: (.*?)\n/i.exec(str));
 
     str = str.replace(/^.*?\n.*?\n/,"");

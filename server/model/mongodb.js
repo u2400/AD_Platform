@@ -2,6 +2,7 @@ var MongoClient = require('mongodb');
 const events = require('events').EventEmitter;
 const EventEmitter = new events();
 const url = `mongodb://127.0.0.1:27017`; //Defining databases address
+const A_NeedArrJsonOperting_List = ["find", "insert", "update"];
 
 var mongo = {};
 mongo.on = function(event,callback){
@@ -15,13 +16,19 @@ mongo.start = function(){
 
     //Defining database name
     option.db_name == undefined ? option.db_name = "log" : null ;
+
     //Defining database table name
     option.table_name == undefined ? option.table_name = "site" : null ;
 
+    //Necessary type conversion
+    if(A_NeedArrJsonOperting_List.indexOf(act) != -1 && json.constructor !== Array){
+        json = [json];
+    }
+
     console.log("Option:",option)
     var O_Operating_List = {};
-    //Defining database opreations
 
+    //Defining database opreations
     O_Operating_List["insert"] = function(dbo,option,json){   //Defining insert opreation
         if(json.constructor !== Array){
             json = [json];
@@ -33,7 +40,6 @@ mongo.start = function(){
     }
  
     O_Operating_List["find"] = function(dbo,option,json){ //Defining find opreation
-        
         dbo.collection(option.table_name).find(...json).toArray(function(err, res) {
             if (err) throw err;
             EventEmitter.emit("message",res);
@@ -42,13 +48,16 @@ mongo.start = function(){
 
     O_Operating_List["delete"] = function(dbo,option,json){ //Defining delete opreation
         option.JustOne = option.JustOne || true;
-        let Type = JustOne ? "deleteOne" : "deleteMany"; //Whether to delete only one record
+        //Whether to delete only one record
+        let Type = JustOne ? "deleteOne" : "deleteMany"; 
+
         dbo.collection(option.table_name)[Type](json);
     }
 
     O_Operating_List["update"] = function(dbo,option,json){
         option.JustOne = option.JustOne || true;
         let Type = JustOne ? "updateOne" : "updateMany";
+        
         dbo.collection(option.table_name)[Type](...json);
     }
 

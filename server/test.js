@@ -4,7 +4,10 @@
 //     console.log(arguments);
 // });
 
-// const O_Mongo = require("./model/mongodb");
+// const O_MongoDB = require("./model/mongodb");
+// const db_name = "System";
+// const table_name = "Workspace";
+// const name = "test";
 // var ObjectId = require('mongodb').ObjectId;
 
 // O_Mongo.on("message",function(res){
@@ -20,3 +23,12 @@
 // console.log(`Cookie:${Cookie}`,`random_hash:${random_hash}`);
 // var res = pass.LoginCookieChecker([Cookie, random_hash, username, key, ip]);
 // console.log(res);
+
+// (function(){
+//     O_MongoDB.start("insert",[{WorkspaceName: name}],{db_name: db_name, table_name: table_name});
+//     return true;
+// })();
+
+
+// const log = require("./controller/log");
+// log();

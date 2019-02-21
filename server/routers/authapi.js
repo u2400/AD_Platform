@@ -9,28 +9,26 @@ require("../test");
 router
     .use((req, res, next)=>{
         res.setHeader('auth', 'isauth');
+        res.setHeader('Content-Type', 'application/json');
         // if(Math.random()>0.5){
         //     res.status(302).location("/");
         // }
         next();
     })
-    .get('/',(req,res)=>{
-        res.cookie('nick', {username:"gcc", _k:"123", _r:"321"}, {signed: true, httpOnly: true});
-        console.log(req.signedCookies);
+    .get('/uploadlog/:Workspace_name',(req,res)=>{
+        log(path, req.params.Workspace_name);
         return res.send(`<a href="/download/5c540823294a3231e02ca4a3">test</a>`);
     })
     .get('/getlogfile/:Workspace_name',(req,res)=>{
         return res.send(`OK`);
     })
-    .get('/getallfile/:Workspace_name',async (req,res)=>{
-        res.setHeader('Content-Type', 'application/json');
+    .get('/getalllog/:Workspace_name',async (req,res)=>{
         var log = await F_LogManage("show",[req.params.Workspace_name]);
         return res.json(log);
     })
-    .get('/getworkspace',(req,res)=>{
-        return res.send(
-            // F_WorkSpaceManage[]
-        );
+    .get('/getworkspace',async (req,res)=>{
+        var Workspace = await F_WorkSpaceManage('show');
+        return res.send(Workspace);
     })
     .get('/download/:id',async (req,res)=>{
         let [name,content] = await F_file_download(req.params.id);

@@ -2,10 +2,10 @@ const express = require('express');
 const router = new express.Router();
 
 router
-.use(function (req, res, next) {
-    res.setHeader('X-Powered-By', '');
-    next();
-})
+// .use(function (req, res, next) {
+//     // res.setHeader('X-Powered-By', '');
+//     next();
+// })
 .get('/login',(req,res)=>{
     return res.send(`login OK!`);
 })

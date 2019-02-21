@@ -10,14 +10,9 @@ var mod = function(path = "./web_log_10"){
             F_ConversionToObject(arguments[0],resolve);
         })
         .then((requests)=>{
-            var name = "";
-            let File = F_GetRequestsFile(requests.body); //Get the file in the request
+            requests.file = F_GetRequestsFile(requests.body); //Get the file in the request
             [requests.PostObj,requests.Post] = F_GetParameter(requests.body);
-
-            if(File != null){
-                requests.file = File;
-            }
-
+            
             mongodb.start("insert",requests);
         })
         .catch((e)=>{

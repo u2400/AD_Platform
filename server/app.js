@@ -5,6 +5,7 @@ const cfg = require('./config');
 const cookieParser = require('cookie-parser')
 const app = new express();
 
+app.disable('x-powered-by');
 app.use(bodyparser.json());
 app.use(cookieParser(cfg.web.key));
 app.use(bodyparser.urlencoded());
