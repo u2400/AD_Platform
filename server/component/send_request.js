@@ -2,7 +2,7 @@ const request = require('request');
 var Mongo = require("../model/mongodb");
 
 
-function F_send_request(req,host){
+function F_send_request(req,host,table_name = "site"){
     return new Promise(function(resolve,reject){
         let O_http_request = {};//Defining http request object
 
