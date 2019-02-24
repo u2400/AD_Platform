@@ -5,12 +5,11 @@ const F_file_download = require("../controller/FileDownload");
 const F_WorkSpaceManage = require("../controller/WorkspaceManage");
 const F_LogManage = require("../controller/LogManage");
 const upload = require("../tools/FileUpload");
-var multer = require('multer');
 require("../test");
 
 router
     .use((req, res, next)=>{
-        res.setHeader('auth', 'isauth');
+        res.setHeader('auth', 'isauthed');
         res.setHeader('Content-Type', 'application/json');
         // if(Math.random()>0.5){
         //     res.status(302).location("/");
@@ -24,7 +23,7 @@ router
         if(err) {
             return res.status(500).json({error: err});
         }
-        console.log(req.files);
+        log(req.params.Workspace_name, `./upload/${req.files[0].filename}`)
         return res.json({state:403});
     })
     .get('/getlogfile/:Workspace_name',(req,res)=>{
@@ -43,14 +42,15 @@ router
         res.setHeader('Content-disposition', 'attachment; filename=' + name);
         return res.send(new Buffer.from(content));
     })
-    .get('/send',(req,res)=>{
-        return res.send("OK!");
+    .post('/send/:Workspace_name',async (req,res)=>{
+        console.log(req.body);
+        
+        return res.send(`OK!`);
      })
     .use(function (err, req, res, next) {
         console.log(err);
         res.status(500).json({error:"server error"});
     });
-
 module.exports = (app)=>{
     app.use('/api',router);
 }

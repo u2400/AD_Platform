@@ -13,6 +13,10 @@ app.use('/',express.static(require('path').join(__dirname,'./assert')));
 routes.forEach(route=>{
     require(route)(app);
 });
+app.use(function (err, req, res, next) {
+    console.log(err);
+    res.status(500).json({error:"server error"});
+});
 app.listen(cfg.web.port,()=>{
     console.log(`listening ${cfg.web.port}`)
 })

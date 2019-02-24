@@ -39,23 +39,26 @@ var mod = function(data = "",host = "127.0.0.1/nnnn.php"){
     }
 
     F_send_request(data, host);
-    // Mongo.on("message",(res)=>{
-    //     for(let i of res){
-    //         F_send_request(i,host)
-    //         .then((res)=>{
-    //             console.log(res);
-    //         })
-    //         .catch((error)=>{
-    //             console.error(error);
-    //         })
-    //     }
-    // })
+    Mongo.on("message",(res)=>{
+        for(let i of res){
+            F_send_request(i,host)
+            .then((res)=>{
+                console.log(res);
+            })
+            .catch((error)=>{
+                console.error(error);
+            })
+        }
+    })
 
-    // Mongo.start("find", [{data}, {
-    //     "sort": [
-    //         ['unixdate', 1]
-    //     ]
-    // }])
+    Mongo.start("find", [{
+        $or: id_arr
+    },
+    {
+        "sort": [['unixdate', 1]]
+    }], {
+        table_name: table_name
+    })
 }
 
 module.exports = mod;
