@@ -79,14 +79,14 @@ for (let i = 0; i < 46; i++) {
     "body" : "GET /index.php HTTP/1.1\nHost: 47.106.182.92:30001\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\nAccept-Language: zh-CN\nAccept-Encoding: gzip, deflate\nConnection: close\nCookie: PHPSESSID=unfs48427tro0rts8b02r81kv7\nUpgrade-Insecure-Requests: 1\n\n",
     "method" : "GET",
     "header" : {
-        "Host" : "47.106.182.92:30001",
-        "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0",
-        "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language" : "zh-CN",
-        "Accept-Encoding" : "gzip, deflate",
-        "Connection" : "close",
-        "Cookie" : "PHPSESSID=unfs48427tro0rts8b02r81kv7",
-        "Upgrade-Insecure-Requests" : "1"
+      "Host" : "47.106.182.92:30001",
+      "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0",
+      "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "Accept-Language" : "zh-CN",
+      "Accept-Encoding" : "gzip, deflate",
+      "Connection" : "close",
+      "Cookie" : "PHPSESSID=unfs48427tro0rts8b02r81kv7",
+      "Upgrade-Insecure-Requests" : "1"
     },
     "file" : {
 
@@ -126,7 +126,6 @@ export default {
           this.$message.error("搜索失败,搜索条件中存在未闭合的')'");
           return false;
         }
-
         return true;
       },
     }
@@ -149,7 +148,7 @@ export default {
           return [];
         }
         try{
-          var rule = filter.replace(/([a-zA-Z0-9_\.]{3,20}):\/?([^/\s]*)\/?/ig,"/$2/.test(data.$1)");
+          var rule = filter.replace(/([a-zA-Z0-9_\-\[\]\'\"]{3,20}):\/?([^/\s]*)\/?/ig,"/$2/.test(data.$1)");
           unfilted_data.forEach(function(data){
             let a;
             console.log(rule);

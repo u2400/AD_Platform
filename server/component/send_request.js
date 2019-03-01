@@ -11,7 +11,7 @@ function F_send_request(req,host,table_name = "site"){
         O_http_request.method = req.method;
         O_http_request.uri = host;
         O_http_request.body = req.Post.join("&");
-        console.log(req)
+        console.log(req);
 
         request(O_http_request,
         function (error, response, body) {
@@ -27,7 +27,7 @@ function F_data_analysis(data){
     if(!data || data==""){
         throw new Error("from component/send_request.js data must not be empty");
     }
-    return data ;
+    return data;
 }
 
 var mod = function(data = "",host = "127.0.0.1/nnnn.php"){
