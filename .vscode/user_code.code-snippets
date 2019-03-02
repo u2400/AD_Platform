@@ -30,7 +30,7 @@
 		"body": [
 			"new Promise((resolve, reject)=>{",
 			"\t$1",
-			"}"
+			"})"
 		],
 		"description": "new a Promise objetc",
 	}				

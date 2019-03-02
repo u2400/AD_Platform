@@ -32,3 +32,10 @@
 
 // const log = require("./controller/log");
 // log();
+
+// const F_send_request = require("./component/send_request");
+// F_send_request([
+//     "5c6e092677cf2c1ae415e8bb",
+//     "5c6e092677cf2c1ae415e8ba",
+//     "5c6e092677cf2c1ae415e8bc"
+// ])

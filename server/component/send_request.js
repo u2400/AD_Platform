@@ -1,5 +1,6 @@
 const request = require('request');
 var Mongo = require("../model/mongodb");
+const ObjectId = require('mongodb').ObjectId;
 
 
 function F_send_request(req,host,table_name = "site"){
@@ -10,7 +11,9 @@ function F_send_request(req,host,table_name = "site"){
         O_http_request.headers = req.header;
         O_http_request.method = req.method;
         O_http_request.uri = host;
-        O_http_request.body = req.Post.join("&");
+        if(req.Post){
+            O_http_request.body = req.Post.join("&");
+        }
         console.log(req);
 
         request(O_http_request,
@@ -24,15 +27,24 @@ function F_send_request(req,host,table_name = "site"){
 }
 
 function F_data_analysis(data){
-    if(!data || data==""){
-        throw new Error("from component/send_request.js data must not be empty");
+    if( !data || (JSON.stringify(data) === "[]") || (JSON.stringify(data) === "{}") ){
+        throw new Error("from component/send_request.js: data must not be empty");
     }
-    return data;
+    if( data.__proto__.constructor == Object ){
+        throw new Error("from component/send_request.js: Object type data is not supported");
+    }
+    
+    var new_data = [];
+    data.forEach(element => {
+        new_data.push({_id: ObjectId(element)});
+    });
+
+    return new_data;
 }
 
-var mod = function(data = "",host = "127.0.0.1/nnnn.php"){
+var mod = function(data = "",host = "127.0.0.1/nnnn.php", table_name){
 
-    data = F_data_analysis(data);
+    var id_arr = F_data_analysis(data);
 
     if(host.search(/^https?:\/\//) == -1){
         host = "http://" + host;

@@ -42,7 +42,7 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" 
         :columns="columns" 
         :dataSource="data" 
-        :pagination="{ pageSize: 500 }" 
+        :pagination="{ pageSize: 50 }" 
     >
         <p slot="expandedRowRender" slot-scope="record" style="margin: 0" :style="{'white-space': 'pre-line'}">{{record.body}}</p>
     </a-table>
@@ -68,34 +68,6 @@ const columns = [{
     width: 200,
 }];
 
-const unfilted_data = [];
-for (let i = 0; i < 46; i++) {
-  unfilted_data.push({
-    key: i,
-    "_id" : `ObjectId("5c540823294a3231e02ca4a2")`,
-    "time" : "2018-12-21 10:53:52",
-    "unixdate" : 1545360832000,
-    "src_ip" : `222.18.127.${49+i}`,
-    "body" : "GET /index.php HTTP/1.1\nHost: 47.106.182.92:30001\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\nAccept-Language: zh-CN\nAccept-Encoding: gzip, deflate\nConnection: close\nCookie: PHPSESSID=unfs48427tro0rts8b02r81kv7\nUpgrade-Insecure-Requests: 1\n\n",
-    "method" : "GET",
-    "header" : {
-      "Host" : "47.106.182.92:30001",
-      "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0",
-      "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "Accept-Language" : "zh-CN",
-      "Accept-Encoding" : "gzip, deflate",
-      "Connection" : "close",
-      "Cookie" : "PHPSESSID=unfs48427tro0rts8b02r81kv7",
-      "Upgrade-Insecure-Requests" : "1"
-    },
-    "file" : {
-
-    },
-    "PostObj" : null,
-    "Post" : null,
-  });
-}
-
 export default {
   data() {
     return {
@@ -103,8 +75,10 @@ export default {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       filter_input: '',
-      unfilted_data,
       filter: '',
+      data: [],
+      first_select: true,
+      data_worker: new Worker("./LogManageWorker.js"),
       xss_filter: function (str) {
         let str1 = str.replace(/(?:\\\\|\\\=)/g,"");
         if(/\=/.test(str1)){
@@ -128,65 +102,59 @@ export default {
         }
         return true;
       },
+      get_data: function (rule, worker) {
+        return new Promise((resolve, reject)=>{
+          worker.postMessage(rule);
+          worker.onmessage = function(mes){
+            console.log(mes);
+            resolve(mes.data);
+          }
+        })
+      },
+      update_data: async function (filter_input) {
+        let filter = filter_input;
+        let get_data = this.get_data;
+        let data_worker = this.data_worker;
+        let local_data;
+
+        if(filter == ''){
+          local_data = await get_data("", data_worker);
+        }
+        else{
+          if(!this.xss_filter(filter)){
+            this.filter = "null";
+            local_data = [];
+          }
+          else{
+            try{
+              var rule = filter.replace(/([a-zA-Z0-9_\-\[\]\'\"]{3,20}):\/?([^/\s]*)\/?/ig,"/$2/.test(data.$1)");
+              local_data = await get_data(rule, data_worker);
+            }
+            catch(e){
+              this.$message.error('搜索失败,请确认语法是否正确');
+              this.filter = "null";
+              console.error(e);
+              local_data = [];
+            }
+          }
+        }
+        console.log("end",local_data);
+        this.data = local_data;
+      }
     }
   },
-  computed: {
-    handleReset () {
-      this.filter = "";
-    },
-    data: function () {
-      let local_data = [];
-      let filter = this.filter;
-      let unfilted_data = this.unfilted_data;
-
-      if(this.filter == ''){
-        local_data = unfilted_data;
-      }
-      else{
-        if(!this.xss_filter(filter)){
-          this.filter = "null";
-          return [];
-        }
-        try{
-          var rule = filter.replace(/([a-zA-Z0-9_\-\[\]\'\"]{3,20}):\/?([^/\s]*)\/?/ig,"/$2/.test(data.$1)");
-          unfilted_data.forEach(function(data){
-            let a;
-            console.log(rule);
-            eval(`if(${rule}){
-              a = true;
-            }
-            else{
-              a = false;
-            }`);
-            if(a){
-              local_data.push(data);
-            }
-          });
-        }
-        catch(e){
-          this.$message.error('搜索失败,请确认语法是否正确');
-          this.filter = "null";
-          console.error(e);
-          return [];
-        }
-      }
-      return local_data;
-    }
+  mounted: function() {  
+    this.start();
   },
   methods: {
     handleSearch (filter_input) {
-      this.filter = filter_input;
+      this.update_data(filter_input);
     },
     handleReset () {
       this.filter = "";
     },
     start () {
-      this.loading = true;
-      // ajax request after empty completing
-      setTimeout(() => {
-        this.loading = false;
-        this.selectedRowKeys = [];
-      }, 1000);
+      this.update_data("");
     },
     onSelectChange (selectedRowKeys) {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
