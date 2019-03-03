@@ -1,10 +1,26 @@
 <template>
   <div>
     <a-row :gutter="16" type="flex" justify="center">
-      <a-col :span="11">
+      <a-col :span="3">
+        <div style="margin-right: 8px">
+          <span>
+            <a-tooltip placement="top" >
+                <template slot="title">
+                <span>有列表内容未展开时优先展开</span>
+                </template>
+                <a-button
+                    @click="showAll"
+                >
+                    展开/收起全部
+                </a-button>
+            </a-tooltip>
+          </span>
+        </div>
+      </a-col>
+      <a-col :span="8">
         <a-input v-model="filter_input"></a-input>
       </a-col>
-      <a-col :span="6">
+      <a-col :span="8">
         <a-button
             type='primary'
             @click="() => handleSearch(this.filter_input)"
@@ -14,28 +30,15 @@
         </a-button>
         <a-button
             @click="() => handleReset()"
-            style="width: 90px"
+            style="width: 90px; margin-right: 8px"
         >Reset
         </a-button>
-      </a-col>
-    </a-row>
-    <div style="margin-bottom: 16px">
-      <span style="margin-left: 8px">
-        <a-tooltip placement="top" >
-            <template slot="title">
-            <span>有列表内容未展开时优先展开</span>
-            </template>
-            <a-button
-                @click="showAll"
-            >
-                展开/收起全部
-            </a-button>
-        </a-tooltip>
-        <template v-if="hasSelected">
+        <template>
           {{`Selected ${selectedRowKeys.length} items`}}
         </template>
-      </span>
-    </div>
+      </a-col>
+    </a-row>
+    <p></p>
     <a-table 
         size="middle" 
         :scroll="{ y: 450 }" 
@@ -141,7 +144,6 @@ export default {
             }
           }
         }
-        console.log("end",local_data);
         this.data = local_data;
       }
     }
