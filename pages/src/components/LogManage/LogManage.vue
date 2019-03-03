@@ -104,10 +104,13 @@ export default {
       },
       get_data: function (rule, worker) {
         return new Promise((resolve, reject)=>{
-          worker.postMessage(rule);
+          worker.postMessage(["FilterData", [rule]]);
           worker.onmessage = function(mes){
             console.log(mes);
             resolve(mes.data);
+          }
+          worker.onerror = function(e) {
+            console.error(e);
           }
         })
       },
@@ -143,7 +146,7 @@ export default {
       }
     }
   },
-  mounted: function() {  
+  mounted: function() {
     this.start();
   },
   methods: {
@@ -153,8 +156,9 @@ export default {
     handleReset () {
       this.filter = "";
     },
-    start () {
-      this.update_data("");
+    async start () {
+      await this.data_worker.postMessage(["SetWorkspace"]);
+      await this.update_data("");
     },
     onSelectChange (selectedRowKeys) {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -172,7 +176,6 @@ export default {
           element.click();
       })
     }
-      
   },
   
 }
