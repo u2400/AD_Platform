@@ -2,25 +2,30 @@ const O_MongoDB = require("../model/mongodb");
 const db_name = "System";
 const table_name = "Workspace"
 
-var mod = function(act,value = []){
+var mod = function(act,value = []) {
     var O_Operating_List = {};
     
-    O_Operating_List["add"] = function(name){
+    O_Operating_List["add"] = function(name) {
         O_MongoDB.start("insert",[{WorkspaceName: name}],{db_name: db_name, table_name: table_name});
         return true;
     }
 
-    O_Operating_List["delete"] = function(){
+    O_Operating_List["delete"] = function() {
         O_MongoDB.start("delete",{WorkspaceName: name},{db_name: db_name, table_name: table_name, JustOne:true});
-        return true
+        return true;
     }
 
-    O_Operating_List["rename"] = function(new_name, old_name){
+    O_Operating_List["rename"] = function(new_name, old_name) {
         O_MongoDB.start("update",[{WorkspaceName: old_name},{WorkspaceName: new_name}],{db_name: db_name, table_name: table_name, JustOne: true});
-        return true
+        return true;
     }
 
-    O_Operating_List["show"] = async function(){
+    O_Operating_List["push"] = function(name, num) {
+        O_MongoDB.start("update",[{WorkspaceName: name},{$inc: {num: num}}],{db_name:db_name, table_name: table_name, JustOne: true});
+        return true;
+    }
+
+    O_Operating_List["show"] = async function() {
         return new Promise((resolve,reject)=>{
             O_MongoDB.on("message",function(res){
                 var arr = [];
@@ -36,10 +41,10 @@ var mod = function(act,value = []){
         });
     }
 
-    try{
+    try {
         var res = O_Operating_List[act](...value);
     }
-    catch(e){
+    catch(e) {
         res = false;
         console.log(e);
     }

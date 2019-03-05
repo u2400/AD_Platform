@@ -5,11 +5,11 @@ const url = `mongodb://127.0.0.1:27017`; //Defining databases address
 const A_NeedArrJsonOperting_List = ["find", "insert", "update"];
 
 var mongo = {};
-mongo.on = function(event,callback){
+mongo.on = function(event,callback) {
     EventEmitter.on(event,callback);
 }
 
-mongo.start = function(){
+mongo.start = function() {
     let act = arguments[0];
     let json = arguments[1];
     var option = arguments[2] || {};
@@ -21,7 +21,7 @@ mongo.start = function(){
     option.table_name == undefined ? option.table_name = "site" : null ;
 
     //Necessary type conversion
-    if(A_NeedArrJsonOperting_List.indexOf(act) != -1 && json.constructor !== Array){
+    if(A_NeedArrJsonOperting_List.indexOf(act) != -1 && json.constructor !== Array) {
         json = [json];
     }
 
@@ -29,7 +29,7 @@ mongo.start = function(){
     var O_Operating_List = {};
 
     //Defining database opreations
-    O_Operating_List["insert"] = function(dbo,option,json){   //Defining insert opreation
+    O_Operating_List["insert"] = function(dbo,option,json) {   //Defining insert opreation
         if(json.constructor !== Array){
             json = [json];
         }
@@ -39,14 +39,14 @@ mongo.start = function(){
         });
     }
  
-    O_Operating_List["find"] = function(dbo,option,json){ //Defining find opreation
+    O_Operating_List["find"] = function(dbo,option,json) { //Defining find opreation
         dbo.collection(option.table_name).find(...json).toArray(function(err, res) {
             if (err) throw err;
             EventEmitter.emit("message",res);
         });
     }
 
-    O_Operating_List["delete"] = function(dbo,option,json){ //Defining delete opreation
+    O_Operating_List["delete"] = function(dbo,option,json) { //Defining delete opreation
         option.JustOne = option.JustOne || true;
         //Whether to delete only one record
         let Type = JustOne ? "deleteOne" : "deleteMany"; 
@@ -54,11 +54,17 @@ mongo.start = function(){
         dbo.collection(option.table_name)[Type](json);
     }
 
-    O_Operating_List["update"] = function(dbo,option,json){
+    O_Operating_List["update"] = function(dbo,option,json) {
         option.JustOne = option.JustOne || true;
-        let Type = JustOne ? "updateOne" : "updateMany";
+        let Type = option.JustOne ? "updateOne" : "updateMany";
         
         dbo.collection(option.table_name)[Type](...json);
+    }
+
+    O_Operating_List["count"] = function(dbo, option, json) {
+        dbo.collection(option.table_name).count(...json, function(){
+            EventEmitter.emit("message",res);
+        });
     }
 
     MongoClient.connect(url,{useNewUrlParser: true},(err, client)=>{

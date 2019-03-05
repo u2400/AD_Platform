@@ -4,7 +4,10 @@ const routes = require('./router');
 const cfg = require('./config');
 const cookieParser = require('cookie-parser')
 const app = new express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
+io.on('connection', function(socket) { console.log('a user connected'); });
 app.disable('x-powered-by');
 app.use(bodyparser.json());
 app.use(cookieParser(cfg.web.key));
