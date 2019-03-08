@@ -16,26 +16,27 @@ var mod = function(act,value) {
     }
 
     O_Operating_List["show"] = async function(table_name) {
-        return new Promise((resolve,reject)=> {
+        return new Promise((resolve,reject) => {
             O_MongoDB.on("message",function(res) {
                 resolve(res);
             });
 
-            O_MongoDB.start("find",[],{table_name: table_name});
+            O_MongoDB.start("find", [], {table_name: table_name});
         });
     }
     //TODO... Get the data entry in the data table
-    O_Operating_List["count"] = async function(workspacename) {
-        return new Promise((resolve, reject)=>{
+    O_Operating_List["count"] = async function(json = {}, table_name = "site") {
+        console.log(`In LogManage.js O_Operating_List["count"] \n json:`,json,`\ntable_name:`,table_name,"\n");
+        return new Promise((resolve, reject) => {
             O_MongoDB.on("message", function(res) {
                 resolve(res);
-            })
+            });
 
-            O_MongoDB.start("find",[],{});
+            O_MongoDB.start("count",json,{table_name: table_name, db_name: db_name});
         })
     }
 
-    try{
+    try {
         var res = O_Operating_List[act](...value);
     }
     catch(e) {

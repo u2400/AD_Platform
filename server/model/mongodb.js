@@ -57,17 +57,16 @@ mongo.start = function() {
     O_Operating_List["update"] = function(dbo,option,json) {
         option.JustOne = option.JustOne || true;
         let Type = option.JustOne ? "updateOne" : "updateMany";
-        
+        console.log(json);
         dbo.collection(option.table_name)[Type](...json);
     }
 
     O_Operating_List["count"] = function(dbo, option, json) {
-        dbo.collection(option.table_name).count(...json, function(){
-            EventEmitter.emit("message",res);
-        });
+        var res = dbo.collection(option.table_name).countDocuments(json);
+        EventEmitter.emit("message",res);
     }
 
-    MongoClient.connect(url,{useNewUrlParser: true},(err, client)=>{
+    MongoClient.connect(url,{useNewUrlParser: true},(err, client)=> {
         if (err) {
             console.log(err);
         }

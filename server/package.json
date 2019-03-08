@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon -e \"coffee js\" -x \"coffee -c ./ && node --inspect app.js\""
+    "test": "nodemon -e \"coffee js\" -x \"coffee -c ./ && node test.js\""
   },
   "author": "",
   "license": "ISC",
