@@ -23,9 +23,9 @@ var mod = function(act,value = []) {
     }
 
     O_Operating_List["push"] = function(name, num) {
-        O_MongoDB.start("update",[{WorkspaceName: name},{num: num}],{db_name:db_name, table_name: table_name, JustOne: true});
+        O_MongoDB.start("update",[{WorkspaceName: name},{$set:{num: num}}],{db_name, table_name, JustOne: true});
         return true;
-    }
+    };
 
     O_Operating_List["show"] = async function() {
         return new Promise((resolve,reject) => {
@@ -40,7 +40,11 @@ var mod = function(act,value = []) {
                 resolve(arr);
             });
             O_MongoDB.start("find",[],{db_name: db_name, table_name: table_name});
-        });
+        })
+        .catch(err => {
+            console.log("In WorkspaceManage.js operating show error:");
+            console.log(err);
+        })
     }
 
     O_Operating_List["set_count"] = async function(table_name) {

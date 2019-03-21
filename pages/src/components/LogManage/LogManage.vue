@@ -75,13 +75,14 @@ export default {
   data() {
     return {
       columns,
+      location: window.location,
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       filter_input: '',
       filter: '',
       data: [],
       first_select: true,
-      data_worker: new Worker("./LogManageWorker.js"),
+      data_worker: new Worker("./LogManageWorker.js"), //新建一个worker用于存储和筛选日志
       xss_filter: function (str) {
         let str1 = str.replace(/(?:\\\\|\\\=)/g,"");
         if(/\=/.test(str1)){
@@ -122,7 +123,7 @@ export default {
         let get_data = this.get_data;
         let data_worker = this.data_worker;
         let local_data;
-
+        this.location.hash
         if(filter == ''){
           local_data = await get_data("", data_worker);
         }
@@ -159,7 +160,7 @@ export default {
       this.filter = "";
     },
     async start () {
-      await this.data_worker.postMessage(["SetWorkspace"]);
+      await this.data_worker.postMessage(["SetWorkspace", /\#\/logmanage\/(.*)/.exec(window.location.hash)[1]]);
       await this.update_data("");
     },
     onSelectChange (selectedRowKeys) {

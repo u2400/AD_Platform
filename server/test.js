@@ -53,7 +53,7 @@ O_Operating_List["push"] = function(name, num) {
 
 (function(table_name) {
     new Promise(async (resolve, reject) => {
-        let num = await LogManage("count", [{}], {db_name:"log", table_name: table_name});
+        let num = await LogManage("count", {}, {db_name:"log", table_name: table_name});
         console.log(num);
         resolve(num);
     })

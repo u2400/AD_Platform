@@ -20,6 +20,12 @@ app.use(function (err, req, res, next) {
     console.log(err);
     res.status(500).json({error:"server error"});
 });
-app.listen(cfg.web.port,()=>{
-    console.log(`listening ${cfg.web.port}`)
-})
+try{
+    app.listen(cfg.web.port,()=>{
+        console.log(`listening ${cfg.web.port}`)
+    })
+}
+catch(err){
+    console.log(err);
+}
+

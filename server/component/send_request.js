@@ -42,15 +42,15 @@ function F_data_analysis(data){
     return new_data;
 }
 
-var mod = function(data = "",host = "127.0.0.1/nnnn.php", table_name){
+var mod = function(host = "127.0.0.1/nnnn.php", table_name){
 
     var id_arr = F_data_analysis(data);
 
+    //automatically added if no protocol is specified
     if(host.search(/^https?:\/\//) == -1){
         host = "http://" + host;
     }
 
-    F_send_request(data, host);
     Mongo.on("message",(res)=>{
         for(let i of res){
             F_send_request(i,host)
@@ -63,12 +63,15 @@ var mod = function(data = "",host = "127.0.0.1/nnnn.php", table_name){
         }
     })
 
+    //通过指定id获取数据库中的请求头.
     Mongo.start("find", [{
         $or: id_arr
     },
     {
-        "sort": [['unixdate', 1]]
+        //按时间顺序排序
+        "sort": [['unixdate', 1]] 
     }], {
+         //指定数据表(即工作区)名称
         table_name: table_name
     })
 }
