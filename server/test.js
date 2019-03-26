@@ -40,27 +40,21 @@
 //     "5c6e092677cf2c1ae415e8bc"
 // ])
 
-var LogManage = require("./controller/LogManage");
-const O_MongoDB = require("./model/mongodb");
-const db_name = "System";
-const table_name = "Workspace";
+const wm = require("./controller/WorkspaceManage");
 
-O_Operating_List = {};
-O_Operating_List["push"] = function(name, num) {
-    O_MongoDB.start("update",[{WorkspaceName: name},{$set:{num: num}}],{db_name:db_name, table_name: table_name, JustOne: true});
-    return true;
-};
+wm("show");
 
-(function(table_name) {
-    new Promise(async (resolve, reject) => {
-        let num = await LogManage("count", {}, {db_name:"log", table_name: table_name});
-        console.log(num);
-        resolve(num);
-    })
-    .then(num => {
-        O_Operating_List["push"](table_name, num);
-        return true;
-    })
-})('test1');
+
+// .then( res => {
+//     let table_list = [];
+//     res.forEach( ele => {
+//         table_list.push( ele.name );
+//     });
+//     return table_list;
+// })
+
+
+
+
 
 

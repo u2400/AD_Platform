@@ -1,4 +1,4 @@
-const O_MongoDB = require("../model/mongodb");
+const O_MongoDB = new require("../model/mongodb");
 const ObjectId = require('mongodb').ObjectId;
 const db_name = "log";
 

@@ -3,7 +3,7 @@
     user仍未完成需要对数据库返回的数据进行解包
 */
 
-const O_Mongo = require("../model/mongodb");
+const O_Mongo = new require("../model/mongodb");
 const O_Password = require("../tools/Passwod");
 
 function login_successful(){
