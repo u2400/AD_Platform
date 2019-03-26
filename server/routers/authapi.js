@@ -34,7 +34,7 @@ router
     })
     .get('/getworkspace', async (req,res) => {
         var Workspace = await F_WorkSpaceManage('show');
-        return res.send(Workspace);
+        return res.json(Workspace);
     })
     .get('/download/:id', async (req,res) => {
         let [name,content] = await F_file_download(req.params.id);

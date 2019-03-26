@@ -14,7 +14,7 @@ module.exports = class {
         let act = arguments[0];
         let json = arguments[1];
         let option = arguments[2] || {};
-        let callback = arguments[3];
+        let callback = arguments[3] || (()=>{});
 
         EventEmitter.on(this.hash, callback);
     

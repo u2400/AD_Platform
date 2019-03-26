@@ -22,11 +22,6 @@ var mod = function(act,value = []) {
         return true;
     }
 
-    O_Operating_List["push"] = function(name, num) {
-        O_MongoDB.start("update",[{WorkspaceName: name},{$set:{num: num}}],{db_name, table_name, JustOne: true});
-        return true;
-    };
-
     O_Operating_List["show"] = async function() {
         return new Promise((resolve,reject) => {
             let mongo_1 = new O_MongoDB();
@@ -40,39 +35,41 @@ var mod = function(act,value = []) {
                     return table_list;
                 })
                 .catch( err => {
-                    console.log("In WorkspaceManage.js operating show error:");
+                    console.log("In WorkspaceManage.js operating show search all workspace error:");
                     console.log(err);
                 })
-                .then( res => { //查询工作区中的日志库
+                .then( async res => { //查询工作区中的日志数量
                     let list = [];
-                    res.forEach( ele => {
-                        mongo_2.start("count",{},{table_name:ele, db_name}, (res) => {
-                            res.then( num => {
-                                list.push({name: ele, num});
-                                console.log(list);
+                    let PromiseList = [];
+                    for(let i of res) {
+                        PromiseList.push(
+                            new Promise((resolve, reject)=>{
+                                mongo_2.start("count",{},{table_name:i, db_name}, (res) => {
+                                    res.then( num => {
+                                        resolve({name: i, num});                                        
+                                    })
+                                })
                             })
-                        })
-                    })
-                    console.log(list);
+                            .then(res => {
+                                list.push(res);
+                            })
+                        )
+                    }
+                    await Promise.all(PromiseList); //等待所有的查询完毕后返回
+                    return list;
+                })
+                .catch(err => {
+                    console.log("In WorkspaceManage.js operating show search log num error:");
+                    console.log(err);
                 })
                 .then( res => {
-                    console.log(res);
+                    resolve(res);
                 })
             });
         })
         .catch(err => {
-            console.log("In WorkspaceManage.js operating show error:");
+            console.log("In WorkspaceManage.js operating show unexpected error:");
             console.log(err);
-        })
-    }
-
-    O_Operating_List["set_count"] = async function(table_name) {
-        new Promise(async (resolve, reject) => {
-            let num = await LogManage("count",[],{db_name:"log", table_name: table_name});
-            resolve(num);
-        })
-        .then(num => {
-            O_Operating_List["push"](table_name, num);
         })
     }
 
