@@ -21,31 +21,14 @@ const columns = [{
   dataIndex: 'num',
   key: 'num',
 }, {
-  title: '最后上传时间',
-  dataIndex: 'time',
-  key: 'time',
-},{
   title: 'Action',
   key: 'action',
   scopedSlots: { customRender: 'action' },
 }];
 
-const data = [{
-  name: 'test1',
-  num: 32,
-  time: '2017-11-01',
-}, {
-  name: 'test2',
-  num: 42,
-  time: '2017-1-11',
-}, {
-  name: 'test3',
-  num: 32,
-  time: '2017-12-26',
-}];
+let data = [];
 
 import Model from "./Modal/Modal.vue";
-
 
 export default {
   components: {
@@ -57,5 +40,19 @@ export default {
       columns,
     }
   },
+  methods: {
+    start: function() {
+      fetch("/api/getworkspace")
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        this.data = res;
+      })
+    }
+  }, 
+  mounted: function() {
+    this.start();
+  }
 }
 </script>
