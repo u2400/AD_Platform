@@ -5,6 +5,7 @@ const F_file_download = require("../controller/FileDownload");
 const F_WorkSpaceManage = require("../controller/WorkspaceManage");
 const F_LogManage = require("../controller/LogManage");
 const upload = require("../tools/FileUpload");
+const send_requests = require("../controller/SendRequest");
 
 router
     .use((req, res, next) => {
@@ -41,9 +42,13 @@ router
         res.setHeader('Content-disposition', 'attachment; filename=' + name);
         return res.send(new Buffer.from(content));
     })
+    .post("/test", async (req,res) => {
+        console.log(req.body);
+        res.json(req.body);
+    }) 
     .post('/send/:Workspace_name', async (req,res) => {
         console.log(req.body);
-        send_requests();
+        send_requests([req.params.Workspace_name, req.body.id_array, {host: req.body.host, regexp: req.body.regexp}]);
         return res.send(`OK!`);
     })
     .use(function (err, req, res, next) {
