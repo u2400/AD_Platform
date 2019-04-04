@@ -40,10 +40,11 @@
 //     "5c6e092677cf2c1ae415e8bc"
 // ])
 
-const wm = require("./controller/WorkspaceManage");
+// const wm = require("./controller/WorkspaceManage");
 
-wm("show");
-
+// wm("show");
+// var a = require("./tools/RandomStr");
+// console.log(a("50"));
 
 // .then( res => {
 //     let table_list = [];

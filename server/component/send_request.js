@@ -42,10 +42,10 @@ function F_data_analysis(data) {
     return new_data;
 }
 
-var mod = function(table_name, id_arr, option) {
+var mod = function(table_name, id_arr = {}, option) {
     console.log(arguments);
     let host = option.host || "127.0.0.1/nnnn.php";
-    // var id_arr = F_data_analysis(id_arr);
+    var id_arr = F_data_analysis(id_arr);
 
     //automatically added if no protocol is specified
     if(host.search(/^https?:\/\//) == -1) {
@@ -54,7 +54,7 @@ var mod = function(table_name, id_arr, option) {
 
     //通过指定id获取数据库中的请求头.
     Mongo.start("find", [{
-        //$or: id_arr
+        $or: id_arr
     },
     {
         //按时间顺序排序
