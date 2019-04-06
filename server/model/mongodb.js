@@ -1,3 +1,8 @@
+/*
+* 调用方式
+* O_mongo(act,json,option,callback);
+*/
+
 var MongoClient = require('mongodb');
 const crypto = require('crypto');
 const events = require('events').EventEmitter;
@@ -14,7 +19,7 @@ module.exports = class {
         let act = arguments[0];
         let json = arguments[1];
         let option = arguments[2] || {};
-        let callback = arguments[3] || (()=>{});
+        let callback = arguments[3] || undefined;
 
         EventEmitter.on(this.hash, callback);
     
@@ -30,10 +35,10 @@ module.exports = class {
         }
     
         console.log("Option:", option);
-        var O_Operating_List = {};
-        O_Operating_List.hash = this.hash;
+        var O_operating_list = {};
+        O_operating_list.hash = this.hash;
         //Defining database opreations
-        O_Operating_List["insert"] = function(dbo, option, json, hash) {   //Defining insert opreation
+        O_operating_list["insert"] = function(dbo, option, json, hash) {   //Defining insert opreation
             if(json.constructor !== Array){
                 json = [json];
             }
@@ -46,7 +51,7 @@ module.exports = class {
             });
         }
      
-        O_Operating_List["find"] = function(dbo, option, json, hash) { //Defining find opreation
+        O_operating_list["find"] = function(dbo, option, json, hash) { //Defining find opreation
             dbo.collection(option.table_name).find(...json).toArray(function(err, res) {
                 if (err) {
                     console.log("In mongodb.js operating find error:");
@@ -56,7 +61,7 @@ module.exports = class {
             });
         }
     
-        O_Operating_List["delete"] = function(dbo, option, json, hash) { //Defining delete opreation
+        O_operating_list["delete"] = function(dbo, option, json, hash) { //Defining delete opreation
             try{
                 option.JustOne = option.JustOne || true;
                 //Whether to delete only one record
@@ -70,7 +75,7 @@ module.exports = class {
             }
         }
     
-        O_Operating_List["update"] = function(dbo,option,json, hash) {
+        O_operating_list["update"] = function(dbo,option,json, hash) {
             try{
                 option.JustOne = option.JustOne || true;
                 let Type = option.JustOne ? "updateOne" : "updateMany";
@@ -82,12 +87,12 @@ module.exports = class {
             }
         }
     
-        O_Operating_List["count"] = function(dbo, option,json = {}, hash) {
+        O_operating_list["count"] = function(dbo, option,json = {}, hash) {
             let res = dbo.collection(option.table_name).countDocuments({});
             EventEmitter.emit(hash, res);
         }
     
-        O_Operating_List["collections"] = function(dbo, option, json, hash) {        
+        O_operating_list["collections"] = function(dbo, option, json, hash) {        
             let res = dbo.listCollections().toArray();
             EventEmitter.emit(hash, res);
         }
@@ -99,7 +104,7 @@ module.exports = class {
             }
             try{
                 var dbo = client.db(option.db_name);
-                O_Operating_List[act](dbo,option,json,this.hash);
+                O_operating_list[act](dbo,option,json,this.hash);
                 client.close();
             }
             catch(err){

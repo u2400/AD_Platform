@@ -1,8 +1,8 @@
 const request = require('request');
-var Mongo = new (require("../model/mongodb"))();
+let F_Promise_mongo = require("../model/Promise_mongo");
 const ObjectId = require('mongodb').ObjectId;
 const db_name = "System";
-const table_name = "request_log_table";
+const RandomStr = require("../tools/RandomStr");
 
 function F_send_request(req,host,table_name = "site") {
     return new Promise(function(resolve,reject) {
@@ -42,7 +42,7 @@ function F_data_analysis(data) {
     return new_data;
 }
 
-var mod = function(table_name, id_arr = {}, option) {
+var mod = async function(table_name, id_arr = {}, option) {
     console.log(arguments);
     let host = option.host || "127.0.0.1/nnnn.php";
     var id_arr = F_data_analysis(id_arr);
@@ -53,7 +53,8 @@ var mod = function(table_name, id_arr = {}, option) {
     }
 
     //通过指定id获取数据库中的请求头.
-    Mongo.start("find", [{
+    let Promise_list = [];
+    F_Promise_mongo("find", [{
         $or: id_arr
     },
     {
@@ -62,17 +63,19 @@ var mod = function(table_name, id_arr = {}, option) {
     }], {
          //指定数据表(即工作区)名称
         table_name: table_name
-    }, (res) => {
+    })
+    .then((res) => {
         for(let i of res) {
+            let p = 
             F_send_request(i,host)
             .catch((error) =>{
                 console.error(error);
             })
-            .then( res => {
-                //将数据写入临时数据表.
-            })
+            Promise_list.push(p);
         }
     })
+    await Promise.all(Promise_list);
+
 }
 
 module.exports = mod;
