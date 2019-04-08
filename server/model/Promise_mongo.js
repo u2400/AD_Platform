@@ -1,4 +1,4 @@
-O_mongo = new (require("./mongodb"))();
+const O_mongo = new (require("./mongodb"))();
 
 module.exports = async function(){
     let act = arguments[0];

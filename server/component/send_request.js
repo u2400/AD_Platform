@@ -3,6 +3,7 @@ let F_Promise_mongo = require("../model/Promise_mongo");
 const ObjectId = require('mongodb').ObjectId;
 const db_name = "System";
 const RandomStr = require("../tools/RandomStr");
+const sleep = require("../tools/Sleep");
 
 function F_send_request(req,host,table_name = "site") {
     return new Promise(function(resolve,reject) {
@@ -54,6 +55,7 @@ var mod = async function(table_name, id_arr = {}, option) {
 
     //通过指定id获取数据库中的请求头.
     let Promise_list = [];
+    let Res_list = [];
     F_Promise_mongo("find", [{
         $or: id_arr
     },
@@ -68,14 +70,22 @@ var mod = async function(table_name, id_arr = {}, option) {
         for(let i of res) {
             let p = 
             F_send_request(i,host)
-            .catch((error) =>{
+            .catch((error) => {
                 console.error(error);
+            })
+            .then((res) => {
+                Res_list.push(res);
             })
             Promise_list.push(p);
         }
     })
+    
+    while(JSON.stringify(Promise_list) === "[]") {
+        console.log("sleep");
+        await sleep(10);
+    }
     await Promise.all(Promise_list);
-
+    return Res_list;
 }
 
 module.exports = mod;

@@ -1,4 +1,4 @@
-crypto = require('crypto');
+let crypto = require('crypto');
 function randomstrlog(err){
     console.error(`randomstr error: ${err}`);
 }
