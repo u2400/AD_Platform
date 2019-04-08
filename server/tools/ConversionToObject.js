@@ -1,6 +1,6 @@
 const events = require('events').EventEmitter;
 
-mod = function (str,resolve){
+let mod = function (str,resolve){
     var HTTPParser = process.binding('http_parser').HTTPParser;
     parser = new HTTPParser(HTTPParser.REQUEST);
 
@@ -73,4 +73,5 @@ mod = function (str,resolve){
     request = new Buffer.from(str);
     parser.execute(request);
 }
+
 module.exports = mod;

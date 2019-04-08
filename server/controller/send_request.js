@@ -4,7 +4,7 @@ const tmp_db_name = "tmp";
 const crypto = require("crypto");
 
 //发送请求
-var mod = async function([workspace_name, id_array, option]){
+let mod = async function([workspace_name, id_array, option]){
 
     option = option || {};
     option.hash = crypto.pbkdf2Sync((new Date()).toString(), crypto.randomBytes(128), 1, 64, 'sha512').toString("hex");
