@@ -11,10 +11,8 @@ module.exports = async function(){
     let option = arguments[2] || {};
     let O_mongo = new mongo();
     return new Promise((resolve, reject)=>{
-
         O_mongo.start(act, json, option, (res) => {
             resolve(res);
         })  
     })
 }
-
