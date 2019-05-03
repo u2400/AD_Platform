@@ -48,6 +48,7 @@
             </div>
           </div>
         </template>
+        <template slot="footer"><br></template>
       </a-modal>
     </div>
     <a-table :columns="columns" :dataSource="data">

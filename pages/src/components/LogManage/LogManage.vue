@@ -4,7 +4,7 @@
       <a-col :span="3">
         <div style="margin-right: 8px">
           <span>
-            <a-tooltip placement="top" >
+            <a-tooltip placement="top">
                 <template slot="title">
                 <span>有列表内容未展开时优先展开</span>
                 </template>
@@ -38,6 +38,64 @@
         </template>
       </a-col>
     </a-row>
+    <p></p>
+    <a-row :gutter="10" type="flex" justify="center">
+      <a-col :span="3">
+        <div>
+          <a-button block="" @click="showModal()">发送请求</a-button>
+        </div>
+      </a-col>
+      <a-col :span="3">
+        <div>
+          <a-button block="">删除选中项</a-button>
+        </div>
+      </a-col>
+      <a-col :span="3">
+        <div>
+          <a-button block="">清空所有选择</a-button>
+        </div>
+      </a-col>
+    </a-row>
+    <a-modal
+        title="发送请求"
+        v-model="visible"
+        @ok="handleOk"
+    >
+      <template>
+        <div>
+          <a-steps :current="current">
+            <a-step v-for="item in steps" :key="item.title" :title="item.title" />
+          </a-steps>
+          <div class="steps-content" style="margin:20px">
+            <a-input v-show="this.current === 0" v-model="SendEnd" placeholder="填写发送的目的地址"/>
+            <a-input v-show="this.current === 1" v-model="regofflag" placeholder="flag{.*?}"/>
+          </div>
+          <div class="steps-action">
+            <a-button
+              v-if="current < steps.length - 1"
+              type="primary" @click="next"
+            >
+              Next
+            </a-button>
+            <a-button
+              v-if="current == steps.length - 1"
+              type="primary"
+              @click="current = 0;handleOk('');"
+            >
+              Done
+            </a-button>
+            <a-button
+              v-if="current > 0"
+              style="margin-left: 8px"
+              @click="prev"
+            >
+              Previous
+            </a-button>
+          </div>
+        </div>
+      </template>
+      <template slot="footer"><br></template>
+    </a-modal>
     <p></p>
     <a-table 
         size="middle" 
@@ -74,6 +132,8 @@ const columns = [{
 export default {
   data() {
     return {
+      visible: false,
+      current: 0,
       columns,
       location: window.location,
       selectedRowKeys: [], // Check here to configure the default column
@@ -81,26 +141,33 @@ export default {
       filter_input: '',
       filter: '',
       data: [],
+      steps: [{
+        title: '目的地址',
+      }, {
+        title: 'flag格式',
+      }, {
+        title: '确认发送请求',
+      }],
       first_select: true,
       data_worker: new Worker("./LogManageWorker.js"), //新建一个worker用于存储和筛选日志
-      xss_filter: function (str) {
+      xss_filter: function (str) { //为了防止搜索过程中执行js代码影响正常搜索功能, 因为是self-xss所以过滤并不干净
         let str1 = str.replace(/(?:\\\\|\\\=)/g,"");
-        if(/\=/.test(str1)){
+        if(/\=/.test(str1)) {
           this.$message.error('搜索失败,搜索条件中所有的等号必须都被转义');
           return false;
         }
         let str2 = str.replace(/(\\\/|\\\\|\\\(|\\\))/g,"");
         str2 = str2.replace(/\/.*?\//g,"");
-        if(/[^\(\)\&\|]\s*?\(.*?\)/.test(str2)){
+        if(/[^\(\)\&\|]\s*?\(.*?\)/.test(str2)) {
           this.$message.error('搜索失败,搜索条件中不得包含函数调用');
           return false;
         }
         let str3 = str1.replace(/(?!\\)\(.*?(?!\\)\)/g,"");
-        if(/(?!\\)\(/.test(str3)){
+        if(/(?!\\)\(/.test(str3)) {
           this.$message.error("搜索失败,搜索条件中存在未闭合的'('");
           return false;
         }
-        if(/(?!\\)\)/.test(str3)){
+        if(/(?!\\)\)/.test(str3)) {
           this.$message.error("搜索失败,搜索条件中存在未闭合的')'");
           return false;
         }
@@ -124,25 +191,26 @@ export default {
         let data_worker = this.data_worker;
         let local_data;
         this.location.hash
-        if(filter == ''){
+        if(filter == '') {
           local_data = await get_data("", data_worker);
         }
-        else{
-          if(!this.xss_filter(filter)){
+        else {
+          if(!this.xss_filter(filter)) {
             this.filter = "null";
             local_data = [];
           }
           else{
-            try{
+            try {
               var rule = filter.replace(/([a-zA-Z0-9_\-\[\]\'\"]{3,20}):\/?([^/\s]*)\/?/ig,"/$2/.test(data.$1)");
               local_data = await get_data(rule, data_worker);
             }
-            catch(e){
+            catch(e) {
               this.$message.error('搜索失败,请确认语法是否正确');
               this.filter = "null";
               console.error(e);
               local_data = [];
             }
+            this.$message.this.success('搜索完毕!');
           }
         }
         this.data = local_data;
@@ -153,6 +221,19 @@ export default {
     this.start();
   },
   methods: {
+    next() {
+        this.current++
+    },
+    prev() {
+      this.current--
+    },
+    showModal() {
+      this.visible = true;
+    },
+    handleOk(e) {
+      console.log(e);
+      this.visible = false;
+    },
     handleSearch (filter_input) {
       this.update_data(filter_input);
     },
@@ -167,15 +248,15 @@ export default {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys
     },
-    showAll(){
-      (function(){
+    showAll() {
+      (function() {
           var a = document.querySelectorAll('.ant-table-row-collapsed')
           if(a.length == 0){
               a = document.querySelectorAll('.ant-table-row-expanded')
           }
           return a
       })()
-      .forEach((element)=>{
+      .forEach((element) => {
           element.click();
       })
     }
