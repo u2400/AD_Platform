@@ -22,6 +22,7 @@ var mod = function(act,value) {
             });
         });
     }
+    
     //TODO... Get the data entry in the data table
     O_Operating_List["count"] = async function(json = {}, table_name = "site") {
         console.log(`In LogManage.js O_Operating_List["count"] \n json:`,json,`\ntable_name:`,table_name,"\n");

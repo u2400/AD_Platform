@@ -5,13 +5,15 @@
         v-model="visible"
         @ok="handleOk"
         >
-            <a-upload-dragger name="file" :multiple="true" :action=" '/api/uploadlog/'+ workspace_name " @change="handleChange">
-                <p class="ant-upload-drag-icon">
-                    <a-icon type="inbox" />
-                </p>
-                <p class="ant-upload-text">将文件拖拽至此处或者点击上传</p>
-                <p class="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
-            </a-upload-dragger>
+            <div style="margin-top: 20px;">
+                <a-upload-dragger name="file" :multiple="true" :action=" '/api/uploadlog/'+ workspace_name " @change="handleChange">
+                    <p class="ant-upload-drag-icon">
+                        <a-icon type="inbox" />
+                    </p>
+                    <p class="ant-upload-text">将文件拖拽至此处或者点击上传</p>
+                    <p class="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+                </a-upload-dragger>
+            </div>
         </a-modal>
     </ary>
 </template>

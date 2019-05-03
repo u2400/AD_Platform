@@ -12,36 +12,16 @@
         :defaultSelectedKeys="['1']"
         mode="inline"
       >
-    <a-sub-menu 
-      key="sub1" 
-    >
-      <span slot="title"><a-icon type="mail" /><span>日志管理</span></span>
-      <a-menu-item-group key="g1" title="Item 2">
-        <a-menu-item key="1"><router-link to="/workspacemanage">日志工作区管理</router-link></a-menu-item>
-        <a-menu-item key="2">日志中上传文件管理</a-menu-item>
-      </a-menu-item-group>
-      <a-menu-item-group key="g2" title="Item 2">
-        <a-menu-item key="3"><router-link to="/test">testPage</router-link></a-menu-item>
-        <a-menu-item key="4">Option 4</a-menu-item>
-      </a-menu-item-group>
-    </a-sub-menu>
-    <a-sub-menu key="sub2">
-      <span slot="title"><a-icon type="appstore" /><span>Navigation Two</span></span>
-      <a-menu-item key="5">Option 5</a-menu-item>
-      <a-menu-item key="6">Option 6</a-menu-item>
-      <a-sub-menu key="sub3" title="Submenu">
-        <a-menu-item key="7">Option 7</a-menu-item>
-        <a-menu-item key="8">Option 8</a-menu-item>
-      </a-sub-menu>
-    </a-sub-menu>
-    <a-sub-menu key="sub4">
-      <span slot="title"><a-icon type="setting" /><span>Navigation Three</span></span>
-      <a-menu-item key="9">Option 9</a-menu-item>
-      <a-menu-item key="10">Option 10</a-menu-item>
-      <a-menu-item key="11">Option 11</a-menu-item>
-      <a-menu-item key="12">Option 12</a-menu-item>
-    </a-sub-menu>
-  </a-menu>
+        <a-menu-item key="1">
+          <router-link to="/workspacemanage">工作区管理</router-link>
+        </a-menu-item>
+        <a-menu-item key="2">
+          <router-link to="/filemanage">包含文件日志管理</router-link>
+        </a-menu-item>
+        <a-menu-item key="3">
+          <router-link to="/workspacemanage">发送请求管理</router-link>
+        </a-menu-item>
+      </a-menu>
     </a-layout-sider>
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: 0}" />

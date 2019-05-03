@@ -5,7 +5,7 @@ const F_file_download = require("../controller/FileDownload");
 const F_WorkSpaceManage = require("../controller/WorkspaceManage");
 const F_LogManage = require("../controller/LogManage");
 const upload = require("../tools/FileUpload");
-const send_requests = require("../controller/SendRequest");
+const send_requests = require("../controller/send_request");
 
 router
     .use((req, res, next) => {
