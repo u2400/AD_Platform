@@ -1,0 +1,5 @@
+.logmanage_contextmenu {
+    position: absolute;
+    z-index: 99999;
+    opacity: 1;
+}

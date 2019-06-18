@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div @contextmenu="handleContextmenu($event)">
+    <div class="logmanage_contextmenu">
+      <p>123</p>
+    </div>
     <a-row :gutter="16" type="flex" justify="center">
       <a-col :span="3">
         <div style="margin-right: 8px">
@@ -53,6 +56,8 @@
 </template>
 
 <script>
+import "./LogManage.css";
+
 const columns = [{
     title: 'time',
     dataIndex: 'time',
@@ -74,6 +79,8 @@ const columns = [{
 export default {
   data() {
     return {
+      window,
+      document,
       columns,
       location: window.location,
       selectedRowKeys: [], // Check here to configure the default column
@@ -153,6 +160,16 @@ export default {
     this.start();
   },
   methods: {
+    handleContextmenu ($event) {
+      console.log($event);
+      window.addEventListener('click', function(){
+        document.querySelector(".logmanage_contextmenu").style = `top: -9999px; left: -9999px;`
+      })
+      document.querySelector(".logmanage_contextmenu").style = `top:${$event.pageY+2}px; left: ${$event.pageX+2}px;`
+      $event.stopPropagation();
+      $event.preventDefault();
+      return false;
+    },
     handleSearch (filter_input) {
       this.update_data(filter_input);
     },
@@ -167,15 +184,15 @@ export default {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
       this.selectedRowKeys = selectedRowKeys
     },
-    showAll(){
-      (function(){
+    showAll() {
+      (function() {
           var a = document.querySelectorAll('.ant-table-row-collapsed')
-          if(a.length == 0){
+          if(a.length == 0) {
               a = document.querySelectorAll('.ant-table-row-expanded')
           }
           return a
       })()
-      .forEach((element)=>{
+      .forEach((element) => { 
           element.click();
       })
     }
