@@ -17,4 +17,4 @@ npm run serve
 cd server/build
 docker-compose up
 ```
-
+页面整体风格仿照ant design pro for react, 但是ant design pro系列没有Vue版就只能自己写一个了, 项目还未完成页面大部分也比较粗糙各位同学见谅.
