@@ -11,6 +11,7 @@ var mod = function(act,value) {
             let id = arr.pop();
             id_arr.push({"_id" : ObjectId(id)});
         }
+        console.log(arr, table_name);
         O_MongoDB.start("delete",[{$or: id_arr}],{table_name: table_name, JustOne: false});
         return true;
     }

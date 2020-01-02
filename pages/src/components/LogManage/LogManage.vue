@@ -9,7 +9,15 @@
           <span>
             <a-tooltip placement="top" >
                 <template slot="title">
-                <span>有列表内容未展开时优先展开</span>
+                <span>
+                  有列表内容未展开时优先展开
+                  <!-- 
+                    示例查询语句
+                    method:POST
+
+                    header['Host']:47.106.182.92
+                  -->
+                </span>
                 </template>
                 <a-button
                     @click="showAll"
@@ -63,7 +71,7 @@ const columns = [{
     dataIndex: 'time',
     width: 200,
 } ,{
-    title: 'Host',
+    title: 'header.Host',
     dataIndex: 'header.Host',
     width: 200,
 }, {

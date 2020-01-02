@@ -39,7 +39,7 @@ Opreretion_list["FilterData"] = async ([rule]) => {
     unfilted_data = (await check_data());
     if(!rule || rule == ""){
         local_data = unfilted_data;
-        console.log(local_data,unfilted_data);
+        console.log(local_data, unfilted_data);
     }
     else{
         unfilted_data.forEach(function(data){
